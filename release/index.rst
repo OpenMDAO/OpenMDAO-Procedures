@@ -51,8 +51,36 @@ Release Testing
 See the previous description of ``test_release``.
 
 
-Making an Official Release
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+The next step is to update the repository on GitHub.  If ``make_release`` was
+run earlier without the ``-t`` arg, then it will have created a branch in the
+local repository named ``release_<version_num>``, where <version_num> would be
+something like **0.2.1** for example.  Check out that directory as follows:
+
+::
+
+    git checkout release_0.2.1
+
+
+Now push the release commit up to the dev branch on GitHub.
+
+::
+
+    git push origin release_0.2.1:dev --tags
+
+
+This assumes that the remote called ``origin`` points to the official repo for
+OpenMDAO-Framework on GitHub.  The ``--tags`` arg pushes the version tag, **0.2.1**
+in this case, up to the official repository.  The version tag was created when
+we ran ``make_release``.
+
+Pushing a new commit up to the dev branch will trigger the automated branch tests.
+Assuming they all pass, all that's left to do is to update the ``master`` branch
+by issuing a pull request from ``dev``, and pushing the distrubution files up to
+the production server.
+
+
+Updating Distribution Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once all of the distribution packages have been made and the release has 
 been tested on all platforms of interest, it's time to make it official
@@ -61,17 +89,18 @@ by pushing it up to the distribution area on ``openmdao.org`` using the
 
 ::
 
-    push_relase <release_directory> http://openmdao.org
+    push_release <release_directory> openmdao@web103.webfaction.com
 
 where ``release_directory`` is the destination directory you supplied earlier
 when you called ``make_release``.  The ``push_release`` script takes the files
 in the release directory and places them in the proper locations on the
 server, i.e., the docs and the ``go-openmdao.py`` file go in the *downloads* 
 area and the distribution packages go in the *dists* area.  The second
-argument to ``push_release`` can be the URL of a different server or even
+argument to ``push_release`` can be the ssh login to the server or even
 a local directory path if you need to debug or test the process outside
 of the production environment.  This is actually what ``test_release`` does
 when you supply it with a release directory.
 
-The last step is to update the repository on GitHub ...
+
+
 
