@@ -18,6 +18,7 @@ Contents:
    release/index.rst
    documentation/index.rst
    website/index.rst
+   amazon.rst
   
 
 Index
