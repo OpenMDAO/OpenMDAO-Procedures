@@ -26,14 +26,14 @@ The OpenMDAO website at ``openmdao.org`` is hosted by WebFaction.
      website and/or get their port numbers.
 
 			
-     .. image:: images/apps.png
+     .. image:: /images/website/apps.png
     
 |
 	 
    `Websites:` Makes sure that the site's apps have URLs that are directly reachable.  Here's the
    current mapping of site apps:
      
-   .. image:: images/urls.png
+   .. image:: /images/website/urls.png
      
 |   
  
@@ -161,13 +161,13 @@ notifications, add yourself to that email address (see above section on email al
 at: ``http://twitter.com/#!/openmdao``.  The username and password for this account will be in the
 password document on Torpedo.
 
-Launchpad:
+Launchpad
 ----------
 
 ``launchpad.net/openmdao`` is no longer used, but has a re-direct to the current project site and to GitHub. 
 The only way to control this stuff is through Keith's account.
 
-GitHub:
+GitHub
 -------
 
 `Service Hooks:`  GitHub is great for keeping code repositories, housing issues (formerly known as tickets in our Trac
