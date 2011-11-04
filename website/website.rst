@@ -26,14 +26,14 @@ The OpenMDAO website at ``openmdao.org`` is hosted by WebFaction.
      website and/or get their port numbers.
 
 			
-     .. image:: apps.png
+     .. image:: images/apps.png
     
 |
 	 
    `Websites:` Makes sure that the site's apps have URLs that are directly reachable.  Here's the
    current mapping of site apps:
      
-   .. image:: urls.png
+   .. image:: images/urls.png
      
 |   
  
