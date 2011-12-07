@@ -2,26 +2,27 @@ Release Building and Publishing
 ===============================
 
 After branch testing is complete, it may be time to create a new OpenMDAO
-release. The tools and procedures described below make the process a little
-easier.  The procedure to create and publish a release is as follows:
+release. The release tool and its subcommands described below make the 
+process a little easier.  The procedure to create and publish a release 
+is as follows:
 
-    - make_release -d <destdir> -v <version> --host=<win32_py26_host> --host=<win32_py27_host>
-    - push_release <destdir> <releasedir>
-    - test_release
-    - push_release
+    - release build -v <version> --binaries
+    - release test rel_<version>  # tests release locally
+    - release test rel_<version>  --all  # tests on all testhosts
+    - release finalize -v <version>
 
 
 Release Creation
 ----------------
 
-The ``make_release`` script is used to build the required distribution tar
+The ``release build`` script is used to build the required distribution tar
 files for all of the OpenMDAO packages. It also builds the html version
 of the docs and the ``go-openmdao.py`` bootstrapping installer file.  
-Running ``make_release`` with a ``-h`` option will display the following:
+Running ``release build`` with a ``-h`` option will display the following:
 
 ::
 
-    Usage: make_release [options]
+    Usage: release build [options]
 
     Options:
       -h, --help        show this help message and exit
@@ -45,7 +46,7 @@ The script places all of the tar files and docs in the destination directory
 specified with the ``-d`` option. The version number is specified with ``-v``
 and must be later than any version already existing on ``openmdao.org``. OpenMDAO
 releases require binary distributions on Windows for certain packages, so
-``make_release`` will fail if you don't specify a Windows host using the
+``release build`` will fail if you don't specify a Windows host using the
 ``--host`` option. The ``-t`` and ``-n`` options should be used for
 testing purposes only.
 
@@ -53,7 +54,7 @@ testing purposes only.
 Release Testing
 ~~~~~~~~~~~~~~~
 
-See the previous description of ``test_release``.
+See the previous description of ``release test``.
 
 
 Making an Official Release
@@ -62,20 +63,20 @@ Making an Official Release
 Once all of the distribution packages have been made and the release has 
 been tested on all platforms of interest, it's time to make it official
 by pushing it up to the distribution area on ``openmdao.org`` using the
-``push_release`` script as follows:
+``release push`` script as follows:
 
 ::
 
     push_relase <release_directory> http://openmdao.org
 
 where ``release_directory`` is the destination directory you supplied earlier
-when you called ``make_release``.  The ``push_release`` script takes the files
+when you called ``release build``.  The ``release push`` script takes the files
 in the release directory and places them in the proper locations on the
 server, i.e., the docs and the ``go-openmdao.py`` file go in the *downloads* 
 area and the distribution packages go in the *dists* area.  The second
-argument to ``push_release`` can be the URL of a different server or even
+argument to ``release push`` can be the URL of a different server or even
 a local directory path if you need to debug or test the process outside
-of the production environment.  This is actually what ``test_release`` does
+of the production environment.  This is actually what ``release test`` does
 when you supply it with a release directory.
 
 The last step is to update the repository on GitHub ...
