@@ -6,7 +6,7 @@ release. The release tool and its subcommands described below make the
 process a little easier.  The procedure to create and publish a release 
 is as follows:
 
-    - release build -v <version> --binaries
+    - release build -v <version> -b
     - release test rel_<version>  # tests release locally
     - release test rel_<version>  --all  # tests on all testhosts
     - release finalize -v <version>
