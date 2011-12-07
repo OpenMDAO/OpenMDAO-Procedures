@@ -3,7 +3,12 @@ Release Building and Publishing
 
 After branch testing is complete, it may be time to create a new OpenMDAO
 release. The tools and procedures described below make the process a little
-easier.
+easier.  The procedure to create and publish a release is as follows:
+
+    - make_release -d <destdir> -v <version> --host=<win32_py26_host> --host=<win32_py27_host>
+    - push_release <destdir> <releasedir>
+    - test_release
+    - push_release
 
 
 Release Creation
