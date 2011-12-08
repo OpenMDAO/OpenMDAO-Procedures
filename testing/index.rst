@@ -18,7 +18,12 @@ the ``-c`` argument.
 
 Aside from the [DEFAULT] section, the file has one section per 
 host or EC2 image.  The section name is used as a short alias for that host 
-and is used with the ``--host=<section_name>`` arg in the testing scripts.
+and is used with the ``--host=<section_name>`` arg in the testing and building scripts.
+
+In all of the scripts described below, adding a ``--host=<section_name>`` will cause 
+the script to `do whatever it does` on that host.  Supplying multiple ``--host`` args is
+allowed.  If ``--all`` is used instead of ``--host=``, then the script will do its thing
+on all of the hosts specified in the ``testhosts.cfg`` file. 
 
 
 EC2 Specific Setup
@@ -51,13 +56,12 @@ SSH keys
 
 You'll need an identity file to execute operations like starting and
 stopping instances on EC2 using the *boto* package. For OpenMDAO
-we use an identity file called ``lovejoy.pem`` for all of our EC2 images
-and instances. The identity file should be placed in the ``~/.ssh`` directory.
-
-To actually connect to a given host via SSH, you'll need to take
-your personal public key for the host you're connecting from and put it
-in the ``authorized_keys`` file on the destination host.  This is true whether
-the host is an EC2 host or not.
+we use an identity file called ``lovejoykey.pem`` for all of our EC2 images
+and instances. This file should be placed in the ``~/.ssh`` directory. Any
+host that you plan to ssh into should have the public key corresponding to
+lovejoykey.pem in its authorized_keys file.  If the host is a non-EC2 host
+and your personal public key is already in its authorized_keys file, you
+should be able to run the scripts there without any additional setup.
 
 
 Scripts
@@ -99,13 +103,17 @@ on a group of remote hosts. Running it with a ``-h`` option will display the fol
 
 The tests run concurrently and write their outputs to 
 ``<outdir>/<host_config_name>/run.out`` where ``outdir`` defaults to ``host_results``,
-and ``host_config_name`` is the section name for that host in the config file.
+and ``host_config_name`` is the section name for that host in the config file. So
+for example if the script were run with a ``--host=natty32_py27`` arg, the the
+results for the *natty32_py27* host would be found in ``host_results/natty32_py27/run.out``
+file.
 
 The ``--host`` arg can be used multiple times to specify more than one host.
 
 The script can test the current (committed) branch of a Git repository, 
 a tarred repository, or a specific branch of a specified local or remote Git 
-repository.  If a Git repository is specified rather than a tar file, then
+repository depending upon the nature of the ``-f`` (or ``--file=``) arg.  
+If a Git repository is specified rather than a tar file, then
 the branch must also be specified. If no ``-f`` is supplied, the current
 branch of the current repository is used.
 
