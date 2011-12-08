@@ -20,7 +20,7 @@ Release Creation
 ----------------
 
 The ``release build`` command is used to build the required distribution tar
-files for all of the OpenMDAO packages. It also builds the html version
+files for all of the OpenMDAO packages. It also builds the HTML version
 of the docs and the ``go-openmdao.py`` bootstrapping installer file.
 
 Running ``release build`` with a ``-h`` option will display the following:
@@ -52,15 +52,15 @@ Running ``release build`` with a ``-h`` option will display the following:
                             path of config file where info for hosts is located
 
 
-The script places all of the tar files and docs in the destination directory
-specified with the ``-d`` option. The default destination directory is *rel_<version>*.
-The version number is specified with ``-v``
-and must be later than any version already existing on ``openmdao.org``. OpenMDAO
-releases require binary distributions on Windows for certain packages, so
-``release build`` will fail if you don't run it with the ``-b`` option to specify
-that binaries should be built. If you are just doing testing of the ``release build``
-command, then the ``-b`` option may be omitted. The ``-t`` and ``-n`` options should 
-not be used except during testing or debugging of the ``release build`` command.
+The script places all of the tar files and docs in the destination directory specified
+with the ``-d`` option. The default destination directory is ``rel_<version>``. The
+version number is specified with ``-v``  and must be later than any version already
+existing on ``openmdao.org``. OpenMDAO releases require binary distributions on Windows
+for certain packages, so ``release build`` will fail if you don't run it with the
+``-b`` option to specify that binaries should be built. If you are just doing testing
+of the ``release build`` command, then the ``-b`` option may be omitted. The ``-t`` and
+``-n`` options should  not be used except during testing or debugging of the ``release
+build`` command.
 
 When creating an *official* release, using all default values is recommended, which 
 results in a command of the form:
@@ -125,9 +125,9 @@ test the release on localhost.  For example:
     release test rel_0.2.1 --testargs=-x
     
 will test the release locally.  It's a good idea to do this before running ``release test`` 
-with a ``--all`` because it can save the time and cost of starting up multiple ec2 instances,
+with a ``--all`` because it can save the time and cost of starting up multiple EC2 instances,
 only to find that they all have the same failure.  Also, the ``--testargs`` option can save
-some time.  Setting *--testargs=-x* will cause the script to return immediately if any test
+some time.  Setting ``--testargs=-x`` will cause the script to return immediately if any test
 fails, rather than running the complete test suite before returning.
 
 If ``release test`` succeeds locally, then the next step is to run it on the full set of 
@@ -139,13 +139,13 @@ test hosts.  This can be done as follows:
     
     
 .. note:: It's highly recommended that you add an OS X host to the hosts in your
-      testhosts.cfg file, because by default no OS X machine will be tested.
-      At the bottom of the ``config/testhosts.cfg`` file in the repository there is
-      an example of an OS X host.
+          ``testhosts.cfg`` file, because by default no OS X machine will be tested.
+          At the bottom of the ``config/testhosts.cfg`` file in the repository there is
+          an example of an OS X host.
 
 Assuming all of the ``release test`` commands succeeded, the final step is to run
-``release finalize``, which will place the new release on the openmdao.org web site
-and update and tag the dev branch of the official OpenMDAO-Framework repository on github.
+``release finalize``, which will place the new release on the ``openmdao.org`` website
+and update and tag the dev branch of the official OpenMDAO-Framework repository on GitHub.
 Since this updates the dev branch, it will trigger automated branch tests.  
 
 Running ``release finalize`` with ``-h`` will display the following help message:
@@ -160,7 +160,7 @@ Running ``release finalize`` with ``-h`` will display the following help message
       -h, --help            show this help message and exit
       -v VERSION, --version VERSION
                             release version of OpenMDAO to be finalized
-      -d, --dryrun          don't actually push any changes up to github or
-                            openmdao.org
+      -d, --dryrun          don't actually push any changes up to GitHub or
+                            ``openmdao.org``
 
 
