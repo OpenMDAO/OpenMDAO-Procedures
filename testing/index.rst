@@ -17,7 +17,14 @@ by default, but will fall back to ``~/.openmdao/testhosts.cfg`` if the config di
 
 Aside from the [DEFAULT] section, the file has one section per 
 host or EC2 image.  The section name is used as a short alias for that host 
-and is used with the ``--host=<section_name>`` arg in the testing scripts.
+and is used with the ``--host=<section_name>`` arg in the testing and building scripts.
+
+In all of the scripts described below, adding a ``--host=<section_name>`` will cause 
+the script to `do whatever it does` on that host.  Supplying multiple ``--host`` args is
+allowed.  If ``--all`` is used instead of ``--host=``, then the script will do its thing
+on all of the hosts specified in the ``testhosts.cfg`` file, subject to certain internal
+filtering.  For example, when running ``release test`` with ``--all``, only those hosts
+in the config file with the option ``test_release=true`` will be used.
 
 
 EC2 Specific Setup
@@ -43,6 +50,10 @@ example of a ``.boto`` file is shown below.
     #proxy_port = 8080
     #proxy_user = <your proxy userid>
     #proxy_pass = <your proxy password>
+    
+
+The AWS id and the secret key can be obtained from an OpenMDAO framework
+developer.
 
 
 SSH keys
@@ -50,21 +61,49 @@ SSH keys
 
 You'll need an identity file to execute operations like starting and
 stopping instances on EC2 using the *boto* package. For OpenMDAO
-we use an identity file called ``lovejoy.pem`` for all of our EC2 images
-and instances. The identity file should be placed in the ``~/.ssh`` directory.
+we use an identity file called ``lovejoykey.pem`` for all of our EC2 images
+and instances. You can obtain this file from an OpenMDAO framework developer.
+This file should be placed in the ``~/.ssh`` directory and its permissions
+should be set to prevent access to anyone but you. Any
+host that you plan to ssh into should have the public key corresponding to
+lovejoykey.pem in its authorized_keys file.  If the host is a non-EC2 host
+and your personal public key is already in its authorized_keys file, you
+should be able to run the scripts there without any additional setup.
 
-To actually connect to a given host via SSH, you'll need to take
-your personal public key for the host you're connecting from and put it
-in the ``authorized_keys`` file on the destination host.  This is true whether
-the host is an EC2 host or not.
 
+Test Scripts
+------------
 
-Scripts
--------
+There are two types of testing to be performed.  One is branch testing, which
+is run on some branch in a git repository. The other is release testing, which 
+is run on an OpenMDAO release (or the files that make up a release).
 
-The following section describes each script in detail. All scripts accept the
-``-h`` and the ``--help`` command-line options which will display all of their
-allowed arguments.
+There are some differences in inputs and outputs for the two scripts, but several things are
+common between them. This section talks about the common things.
+
+The ``-h`` and the ``--help`` command-line options which will display all 
+of their allowed arguments.
+
+Output is written to the output directory specified using the ``-o`` option. 
+The tests run concurrently and write their outputs to 
+``<outdir>/<host_config_name>/run.out`` where ``outdir`` defaults to ``host_results``,
+and ``host_config_name`` is the section name for that host in the config file. So
+for example if the script were run with a ``--host=natty32_py27`` arg, the the
+results for the *natty32_py27* host would be found in ``host_results/natty32_py27/run.out``
+file.
+
+The ``--testargs`` option can specify args that are passed to 
+openmdao_test on the remote host.  Adding a ``--testargs=-x``, for example, 
+would cause the test to end as soon as any test on the remote host failed.
+Adding the name of a specific module to test can also be a big time saver
+when debugging a specific test failure.
+
+The ``--host`` arg specifies a remote host to run on, and can be used multiple 
+times to specify more than one host.
+
+The ``--all`` arg will cause all hosts in the testhosts.cfg file to be used for the
+test, subject to filtering based on the value of the *test_release* and *test_branch*
+options for that host in the file.
 
 
 test_branch
@@ -74,77 +113,45 @@ The ``test_branch`` script is used to test a branch running ``openmdao_test``
 on a group of remote hosts. Running it with a ``-h`` option will display the following:
 
 ::
+    usage: test_branch [-h] [-c CONFIG] [--host HOST] [-o OUTDIR]
+                       [--filter FILTERS] [--all] [-k] [-f FNAME] [-b BRANCH]
+                       [-t TESTARGS]
 
-    Usage: test_branch [OPTIONS] -- [options to openmdao_test]
+    optional arguments:
+      -h, --help            show this help message and exit
+      -c CONFIG, --config CONFIG
+                            Path of config file where info for hosts is located
+      --host HOST           Select host from config file to run on. To run on
+                            multiple hosts, use multiple --host args
+      -o OUTDIR, --outdir OUTDIR
+                            Output directory for results (defaults to
+                            ./host_results)
+      --filter FILTERS      boolean expression to filter hosts
+      --all                 Use all hosts found in testhosts.cfg file
+      -k, --keep            Don't delete the temporary build directory. If testing
+                            on EC2 stop the instance instead of terminating it.
+      -f FNAME, --file FNAME
+                            Pathname of a tarfile or URL of a git repo. Defaults
+                            to the current repo.
+      -b BRANCH, --branch BRANCH
+                            If file is a git repo, supply branch name here
+      --testargs TESTARGS
+                            args to be passed to openmdao_test
 
-    Options:
-       -h, --help     show this help message and exit
-       -c CONFIG, --config=CONFIG
-                      Path of config file where info for hosts is located
-       --host=HOST    Select host from config file to run on. To run on
-                      multiple hosts, use multiple --host args.
-       --all          If True, run on all hosts in config file.
-       -o OUTDIR, --outdir=OUTDIR
-                      Output directory for results (defaults to ./host_results)
-       -k, --keep     If there are test/build failures, don't delete the
-                      temporary build directory. If testing on EC2, stop 
-                      the instance instead of terminating it. 
-       -f FNAME, --file=FNAME
-                      Pathname of a tarfile or URL of a Git repo. 
-                      Defaults to the current repo.
-       -b BRANCH, --branch=BRANCH
-                      If file is a Git repo, supply branch name here
 
-
-The tests run concurrently and write their outputs to 
-``<outdir>/<host_config_name>/run.out`` where ``outdir`` defaults to ``host_results``,
-and ``host_config_name`` is the section name for that host in the config file.
-
-The ``--host`` arg can be used multiple times to specify more than one host.
 
 The script can test the current (committed) branch of a Git repository, 
 a tarred repository, or a specific branch of a specified local or remote Git 
-repository.  If a Git repository is specified rather than a tar file, then
+repository depending upon the nature of the ``-f`` (or ``--file=``) arg.  
+If a Git repository is specified rather than a tar file, then
 the branch must also be specified. If no ``-f`` is supplied, the current
 branch of the current repository is used.
 
-If a ``--`` arg is supplied, any args after that are passed to openmdao_test
-on the remote host.  Adding a ``-x`` arg after the ``--`` arg, for example, 
-would cause the test to end as soon as any test on the remote host failed.
-Adding the name of a specific module to test can also be a big time saver
-when debugging a specific test failure.
 
-
-test_release
+release test
 ~~~~~~~~~~~~
 
-The ``test_release`` script is used to test a release by running ``openmdao_test``
-on a group of remote hosts.  It can also be used to test an existing 
-production release on a specific host. Running it with a ``-h`` option 
-will display the following:
+Release testing is done using the ``release test`` command.  See the *Release Testing*
+section for details.
 
-
-::
-
-    Usage: test_release [OPTIONS] -- [options to openmdao_test]
-
-    Options:
-      -h, --help        show this help message and exit
-      -c CONFIG, --config=CONFIG
-                        Path of config file where info for hosts is located
-      --host=HOST       Select host from config file to run on. To run on
-                        multiple hosts, use multiple --host args
-      --all             If True, run on all hosts in config file.
-      -o OUTDIR, --outdir=OUTDIR
-                        Output directory for results (defaults to
-                        ./host_results)
-      -k, --keep        Don't delete the temporary build directory. If testing
-                        on EC2 stop the instance instead of terminating it.
-      -f FNAME, --file=FNAME
-                        URL or pathname of a go-openmdao.py file or pathname
-                        of a release dir
-
-The ``-f`` argument is used to specify either the ``go-openmdao.py`` file that 
-builds the release environment or the path to a directory that was built 
-using the ``make_release`` script.
 

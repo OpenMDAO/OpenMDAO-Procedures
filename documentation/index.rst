@@ -1,5 +1,5 @@
-Documentation 
-==============
+Maintaining the Documentation 
+=============================
 
 Updating Sphinx
 ---------------
