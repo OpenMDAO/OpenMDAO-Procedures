@@ -10,11 +10,10 @@ General Setup
 
 Information about remote hosts is contained in a config file.  An example
 of such a file is ``config/testhosts.cfg`` in the 
-OpenMDAO-Framework repository.  This file should be copied to
+OpenMDAO-Framework repository.  This file can be copied to
 ``~/.openmdao/testhosts.cfg`` and modified to contain the hosts or EC2 images
-you intend to test on.  The scripts look for this file in ``~/.openmdao``
-by default.  You can specify a different config file on the command line using
-the ``-c`` argument.
+you intend to test on.  The scripts look for this file in ``config/testhosts.cfg``
+by default, but will fall back to ``~/.openmdao/testhosts.cfg`` if the config directory's version doesn't exist. The reason for using the config directory's version as the default is so that developers will see changes to the image ID numbers (as images are updated, their numbers change) rather than have to manually keep updating their own versions.  You can specify a different config file (e.g. your ``~/.openmdao`` version) on the command line using the ``-c`` argument.
 
 Aside from the [DEFAULT] section, the file has one section per 
 host or EC2 image.  The section name is used as a short alias for that host 
