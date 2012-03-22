@@ -1,12 +1,12 @@
 Maintaining the Documentation 
 =============================
 
-Updating Sphinx
----------------
+Updating Sphinx in the OpenMDAO Repository
+-------------------------------------------
 
-Generally, the tech writer creates a new branch, grabs the newest version of Sphinx, and checks the documents to make
-sure everything still looks okay -- that nothing weird came in with the new  Sphinx. The branch has to be merged, and the
-SCM has to do certain things to incorporate a new version. 
+To update Sphinx, typically you create a new branch, grab the newest version of Sphinx, and build the the
+documents to make sure everything still looks okay and no warnings or errors show up during the build process.
+If warnings or errors occur, tests will fail. 
 
 To get the latest version of Sphinx, first activate your virtual environment using the ``. bin/activate`` command. 
 
@@ -25,7 +25,39 @@ If you want to grab a specific version of Sphinx, type:
 
 For example::
 
-  easy_install Sphinx==1.0.6
+  easy_install Sphinx==1.1.3
+  
+While Sphinx is being installed, notice which version of docutils is being used since the new version of Sphinx
+may require that docutils be updated. For example, when we upgraded from Sphinx 1.0.6 to 1.1.3, for Sphinx
+to work we had to move from docutils 0.7 to 0.8.1.
+
+Now, follow these steps:
+
+1. Update the script ``go-openmdao-dev.py``, which is located in the root directory of your repo. Update the version of
+   Sphinx, and if necessary, docutils. 
+   
+2. Deactivate your virtual environment::
+  
+     deactivate
+     
+3. Delete ``devenv/``::
+
+     rm -rf devenv/
+     
+4. Now rebuild the environment by running the installation script::
+
+     python go-openmdao-dev.py   
+     
+5. Run the test suite::
+
+     openmdao test
+             
+6. Assuming there are no test failures, you can commit the changes on your branch and then issue a pull request
+   from your personal OpenMDAO repo. 
+
+After the branch is merged, one of the OpenMDAO maintainers will put a new distribution for Sphinx (and if necessary,
+docutils) in ``http://openmdao.org/dists``, which will cause the index to be automatically updated.
+
 
 Running Sphinx Linkcheck 
 -------------------------
@@ -171,4 +203,36 @@ number where the error or warning occurs. To find the error/warning, do the foll
 Updating this Document
 ----------------------
 
-Once this is moved to a Git repository, update the instructions. 
+If you haven't done so, you need to make a personal fork of the OpenMDAO-Procedures repository and also clone the repo.
+Additionally, define a remote branch in your local repo. You only do these steps once. If you have done all
+this, follow the steps below.
+
+1. Your first step should always be to update the master branch in your local OpenMDAO-Procedures repo::
+ 
+     git pull origin master
+  
+   If you have a problem, check to make sure your origin is correct::
+   
+     git remote -v
+     
+   The system should return something like this::
+   
+     myfork  git@github.com:pziegfeld/OpenMDAO-Procedures (fetch)
+     myfork  git@github.com:pziegfeld/OpenMDAO-Procedures (push)
+     origin  git@github.com:OpenMDAO/OpenMDAO-Procedures.git (fetch)
+     origin  git@github.com:OpenMDAO/OpenMDAO-Procedures.git (push)   
+        
+2. From the updated master branch, create a new working branch::
+   
+     git checkout -b <new_branch_name>
+
+     
+3. Update the text on your branch as you normally would. To build the docs, you must be in the branch's root directory. Type::
+
+     make html
+     
+   This command not only builds the docs but also displays them in Firefox.
+   
+5. When ready, commit your changes and issue a pull request. (No tests are run in this repo as it is a
+   private repo for the GRC team and is used by only two or three people.)
+
