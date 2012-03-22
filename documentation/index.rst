@@ -235,4 +235,18 @@ this, follow the steps below.
    
 5. When ready, commit your changes and issue a pull request. (No tests are run in this repo as it is a
    private repo for the GRC team and is used by only two or three people.)
+   
+6. After you have issued the pull request, the maintainer of the repository must do the following before you
+   can see your changes::
 
+     1. Merge the branch on GitHub.
+     
+     2. Log in to webfaction and change to the "docs/procedure_docs" directory.
+     
+     3. Do a "git pull origin master". 
+
+     4. Type: "make html" in this location. 
+
+
+Upon completion of these actions, your doc changes will be pushed up to our website at
+``openmdao.org/procedures``, and you can view them.
