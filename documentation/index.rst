@@ -1,12 +1,12 @@
 Maintaining the Documentation 
 =============================
 
-Updating Sphinx in the OpenMDAO Repository
--------------------------------------------
+Updating Sphinx in the OpenMDAO-Framework Repository
+-----------------------------------------------------
 
-To update Sphinx, typically you create a new branch, grab the newest version of Sphinx, and build the the
-documents to make sure everything still looks okay and no warnings or errors show up during the build process.
-If warnings or errors occur, tests will fail. 
+To update Sphinx, typically you create a new branch in your personal repo, grab the newest version of Sphinx,
+and build the documents to make sure everything still looks okay and no warnings or errors show up during the
+build process. If warnings or errors occur, tests will fail. 
 
 To get the latest version of Sphinx, first activate your virtual environment using the ``. bin/activate`` command. 
 
@@ -33,9 +33,9 @@ to work we had to move from docutils 0.7 to 0.8.1.
 
 Now, follow these steps:
 
-1. Update the script ``go-openmdao-dev.py``, which is located in the root directory of your repo. Update the version of
-   Sphinx, and if necessary, docutils. 
-   
+1. Update the script ``go-openmdao-dev.py``, which is located in the root directory of your repo.
+   (Change the version of Sphinx, and if necessary, docutils.)
+
 2. Deactivate your virtual environment::
   
      deactivate
@@ -62,50 +62,116 @@ docutils) in ``http://openmdao.org/dists``, which will cause the index to be aut
 Running Sphinx Linkcheck 
 -------------------------
 
-Linkckeck is one of the Sphinx builders you can run to check external links. Follow the instructions
-below.
+Linkckeck is a Sphinx builder you can run to check external links in the OpenMDAO user docs. Follow
+the instructions below.
 
 
-1. You'll need to create a branch from the latest truck.
+1. First, update the dev branch in your local OpenMDAO-Framework repo::
 
-2. Activate the virtual environment (``/devenv``) on your branch.
+     git pull origin dev
+   
+2. Create and check out a new branch for running linkcheck::
 
-3. Go to the ``/docs`` directory.  (You must be in same directory as the ``conf.py.rst`` file.)
+     git checkout -b <branch_name>
 
-4. Run the linkcheck builder as follows:
+2. Activate the virtual environment. From ``devenv/``, type::
 
-::
+     . bin/activate
 
-  sphinx-build -b linkcheck . linkcheck-output
+3. Now go to the ``docs/`` directory and run Linkcheck. (You must be in same directory as the ``conf.py.rst`` file.)
+
+   ::
+   
+     cd ../docs/
+     spinx-build -b linkcheck . linkcheck-output
 
 
-This command creates a directory (e.g., ``linkcheck-ouput``, although you can name it something else)
-and makes an ``output.txt`` file.
+   This command creates a new directory (e.g., ``linkcheck-ouput``, although you can name it something else)
+   and makes an ``output.txt`` file.
 
-When you go to ``linkcheck-output`` (or whatever you name the directory), you can bring up the
-``output.txt`` file in your desired text editor. (NEdit is an option.)
+5. Go to ``linkcheck-output`` directory and open the ``output.txt`` file in your desired text
+   editor. (NEdit is used in this example.)
+   
+   :: 
+   
+     cd ../linkcheck-output
+     nedit output.txt &
 
-The ``output.rst`` file produced by linkcheck will list the document, line number, problem, and the URL.
-See the example below.
+   The ``output.txt`` file produced by Linkcheck will list the document, line number, problem, and the
+   URL. See the example below.
 
-::
+   ::
 
-  dev-guide/accessing.rst:18: [broken] https://launchpad.net: <urlopen error unknown url type: https>
-  dev-guide/accessing.rst:51: [broken] https://launchpad.net/people/+me/+editsshkeys: <urlopen error unknown url type: https>
-  dev-guide/working.rst:288: [broken] https://launchpad.net/openmdao: <urlopen error unknown url type: https>
-  licenses/index.rst:42: [redirected] http://www.pycrypto.org/ to http://www.dlitz.net/software/pycrypto/
-  licenses/index.rst:53: [broken] http://pyparsing.wikispaces.com/: <urlopen error unknown url type: https>
+     licenses/index.rst:24: [redirected] http://somethingaboutorange.com/mrl/projects/nose/ to http://readthedocs.org/docs/nose/en/latest/
+     licenses/index.rst:16: [redirected] http://fabfile.org to http://docs.fabfile.org/en/1.4.0/index.html
+     licenses/index.rst:44: [redirected] http://www.pycrypto.org/ to https://www.dlitz.net/software/pycrypto/
+     licenses/index.rst:62: [redirected] http://www.virtualenv.org to http://www.virtualenv.org/en/latest/index.html
+     licenses/index.rst:50: [redirected] http://pyparsing.wikispaces.com/ to http://pyparsing.wikispaces.com/?responseToken=793c872cd5fdfc7394c68e7fd2a074a2
+     
+   The redirected links in  ``licenses/index.rst`` cannot be changed because the system is pulling metadata from each package's
+   site. Such links will continue to appear until the metadata is updated.
+     
+   Occasionally a message will say that a link has timed out. The link still works, but it's a good
+   idea to check it anyway. 
+
+Updating This Document (OpenMDAO Procedures)
+--------------------------------------------
+
+If you haven't done so, you need to make a personal fork of the OpenMDAO-Procedures repository and also clone the repo.
+Additionally, define a remote branch in your local repo. You only do these steps once. If you have done all
+this, follow the steps below.
+
+1. Your first step should always be to update the master branch in your local OpenMDAO-Procedures repo::
+ 
+     git pull origin master
   
-  
-In the first line of the example, the redirected link in the Architecture Document can be updated in the ``concepts.rst`` file. 
+   If you have a problem, check to make sure your origin is correct::
+   
+     git remote -v
+     
+   The system should return something like this::
+   
+     myfork  git@github.com:pziegfeld/OpenMDAO-Procedures (fetch)
+     myfork  git@github.com:pziegfeld/OpenMDAO-Procedures (push)
+     origin  git@github.com:OpenMDAO/OpenMDAO-Procedures.git (fetch)
+     origin  git@github.com:OpenMDAO/OpenMDAO-Procedures.git (push)   
+        
+2. From the updated master branch, create and check out a new working branch::
+   
+     git checkout -b <branch_name>
 
-The next three "broken" links are not really broken. They refer to secure sites that require a Launchpad userid and password. The
-links cannot be changed, so they should always appear in the output file. 
+     
+3. Update the text on your branch as you normally would. To build the docs, you must be in the
+   branch's root directory. Type::
 
-In line 5, the redirected link in the ``licenses.rst`` cannot be changed because the system is pulling metadata from the package's
-site. Thus this line will show up until the metadata is updated.
+     make html
+     
+   This command not only builds the docs but also displays them in Firefox.
+   
+5. When ready, commit your changes and issue a pull request. (No tests are run in this repo as it is a
+   private repo for the GRC team and is used by only two or three people.)
+   
+6. After you have issued the pull request, the maintainer of the repository must do the following before you
+   can see your changes::
+
+     1. Merge the branch on GitHub.
+     
+     2. Log in to webfaction and change to the "docs/procedure_docs" directory.
+     
+     3. Do a "git pull origin master". 
+
+     4. Type: "make html" in this location. 
 
 
+Upon completion of these actions, your doc changes will be pushed up to our website at
+``openmdao.org/procedures``, where you can view them.
+
+Updating Sphinx in the Procedures Repo
+--------------------------------------
+
+Text to be added.
+
+     
 .. _`Using-NEdit`:
 
 Using NEdit 
@@ -200,53 +266,3 @@ number where the error or warning occurs. To find the error/warning, do the foll
 
    You should be able to locate the line with the error and correct the problem. 
 
-Updating this Document
-----------------------
-
-If you haven't done so, you need to make a personal fork of the OpenMDAO-Procedures repository and also clone the repo.
-Additionally, define a remote branch in your local repo. You only do these steps once. If you have done all
-this, follow the steps below.
-
-1. Your first step should always be to update the master branch in your local OpenMDAO-Procedures repo::
- 
-     git pull origin master
-  
-   If you have a problem, check to make sure your origin is correct::
-   
-     git remote -v
-     
-   The system should return something like this::
-   
-     myfork  git@github.com:pziegfeld/OpenMDAO-Procedures (fetch)
-     myfork  git@github.com:pziegfeld/OpenMDAO-Procedures (push)
-     origin  git@github.com:OpenMDAO/OpenMDAO-Procedures.git (fetch)
-     origin  git@github.com:OpenMDAO/OpenMDAO-Procedures.git (push)   
-        
-2. From the updated master branch, create a new working branch::
-   
-     git checkout -b <new_branch_name>
-
-     
-3. Update the text on your branch as you normally would. To build the docs, you must be in the branch's root directory. Type::
-
-     make html
-     
-   This command not only builds the docs but also displays them in Firefox.
-   
-5. When ready, commit your changes and issue a pull request. (No tests are run in this repo as it is a
-   private repo for the GRC team and is used by only two or three people.)
-   
-6. After you have issued the pull request, the maintainer of the repository must do the following before you
-   can see your changes::
-
-     1. Merge the branch on GitHub.
-     
-     2. Log in to webfaction and change to the "docs/procedure_docs" directory.
-     
-     3. Do a "git pull origin master". 
-
-     4. Type: "make html" in this location. 
-
-
-Upon completion of these actions, your doc changes will be pushed up to our website at
-``openmdao.org/procedures``, and you can view them.
