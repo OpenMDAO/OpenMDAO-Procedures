@@ -99,7 +99,8 @@ html_theme = 'default'
 html_theme_options = {
    "headtextcolor": "darkred",
    "headbgcolor": "gainsboro",
-   "headfont": "Arial",
+   "bodyfont": "Helvetica",
+   "headfont": "Helvetica",
    "relbarbgcolor": "black",
    "relbartextcolor": "white",
    "relbarlinkcolor": "white",
