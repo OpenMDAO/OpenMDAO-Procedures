@@ -27,14 +27,14 @@ For example::
 
   easy_install Sphinx==1.1.3
   
-While Sphinx is being installed, notice which version of docutils is being used since the new version of Sphinx
-may require that docutils be updated. For example, when we upgraded from Sphinx 1.0.6 to 1.1.3, for Sphinx
-to work we had to move from docutils 0.7 to 0.8.1.
+While Sphinx is being installed, notice which version of Docutils is being used since the new version of Sphinx
+may require that Docutils be updated. For example, when we upgraded from Sphinx 1.0.6 to 1.1.3, for Sphinx
+to work we had to move from Docutils 0.7 to 0.8.1.
 
 Now, follow these steps:
 
 1. Update the script ``go-openmdao-dev.py``, which is located in the root directory of your repo.
-   (Change the version of Sphinx, and if necessary, docutils.)
+   (Change the version of Sphinx, and if necessary, Docutils.)
 
 2. Deactivate your virtual environment::
   
@@ -55,9 +55,18 @@ Now, follow these steps:
 6. Assuming there are no test failures, you can commit the changes on your branch and then issue a pull request
    from your personal OpenMDAO repo. 
 
-After the branch is merged, one of the OpenMDAO maintainers will put a new distribution for Sphinx (and if necessary,
-docutils) in ``http://openmdao.org/dists``, which will cause the index to be automatically updated.
+After the branch is merged, one of the OpenMDAO maintainers will put a new distribution for Sphinx
+(and if necessary, Docutils) in ``http://openmdao.org/dists``, which will cause the index to be
+automatically updated.
 
+Updating Sphinx in the OpenMDAO-Procedures Repo
+-----------------------------------------------
+
+Unlike the OpenMDAO-Framework repo, the Procedures repo has no virtual environment to activate, so you
+cannot use the ``easy_install`` command. Moreover, you do not have permission to install in the
+directory you need. Therefore, when you want to update Sphinx, ask the system admin (currently J.
+Below) to install the desired version at the system level. Remember to ask for the latest version of
+Docutils since it may be needed for Sphinx to run properly.
 
 Running Sphinx Linkcheck 
 -------------------------
@@ -78,15 +87,15 @@ the instructions below.
 
      . bin/activate
 
-3. Now go to the ``docs/`` directory and run Linkcheck. (You must be in same directory as the ``conf.py.rst`` file.)
+3. Now go to the ``docs/`` directory and run linkcheck. (You must be in same directory as the ``conf.py.rst`` file.)
 
    ::
    
      cd ../docs/
-     spinx-build -b linkcheck . linkcheck-output
+     sphinx-build -b linkcheck . linkcheck-output
 
 
-   This command creates a new directory (e.g., ``linkcheck-ouput``, although you can name it something else)
+   This command creates a new directory (e.g., ``linkcheck-output``, although you can name it something else)
    and makes an ``output.txt`` file.
 
 5. Go to ``linkcheck-output`` directory and open the ``output.txt`` file in your desired text
@@ -97,7 +106,7 @@ the instructions below.
      cd ../linkcheck-output
      nedit output.txt &
 
-   The ``output.txt`` file produced by Linkcheck will list the document, line number, problem, and the
+   The ``output.txt`` file produced by linkcheck will list the document, line number, problem, and the
    URL. See the example below.
 
    ::
@@ -113,6 +122,7 @@ the instructions below.
      
    Occasionally a message will say that a link has timed out. The link still works, but it's a good
    idea to check it anyway. 
+   
 
 Updating This Document (OpenMDAO Procedures)
 --------------------------------------------
@@ -162,16 +172,36 @@ this, follow the steps below.
 
      4. Type: "make html" in this location. 
 
-
 Upon completion of these actions, your doc changes will be pushed up to our website at
 ``openmdao.org/procedures``, where you can view them.
 
-Updating Sphinx in the Procedures Repo
---------------------------------------
+Editing the openmdao.org Blog 
+------------------------------
 
-Text to be added.
+Before you can modify any text on the ``openmdao.org`` webpage, you need to log in to WordPress.
 
-     
+1. Go to this WordPress URL: ``openmdao.org/wp-admin`` 
+
+2. Enter your WordPress Username and Password.
+   
+   The Dashboard page will appear and look similar to the following:
+   
+   .. figure:: WP.PNG
+      :align: center
+      :alt: Shows WordPress Dashboard; in far left column you can click on **Post, Media, Links, Pages, etc.**, to access and edit any of these items.
+      
+      WordPress Dashboard
+
+3. Click on **Posts** in the left column to edit any of the ``openmdao.org`` posts. 
+
+   The **Posts** page, with a list of entries to edit, will appear. 
+   
+4. Click on the title of the post you wish to edit. This brings up the the **Edit Post** page for that
+   entry. 
+   
+5. Edit the desired file. When you are finished, you can preview changes or just click on the
+   **Update** button to save changes.
+
 .. _`Using-NEdit`:
 
 Using NEdit 
