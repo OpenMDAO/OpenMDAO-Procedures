@@ -132,6 +132,88 @@ The News page is a blog app plugin.  Downloads leads to the downloads page that'
 script.  Support links all take users to either documentation, screencasts, or to the OSQA app mentioned
 above.
 
+OSQA
+-----
+
+Open Source Q&A (OSQA) is the community forum where users and developers ask and answer questions about
+OpenMDAO.
+
+Removing Spam Users from QSQA
+++++++++++++++++++++++++++++++
+
+A script has been written to remove users from the OSQA database. It is located in ``~/bin`` and can be run
+from anywhere with the command::
+
+  osqaDBclean.py  
+
+**Arguments:**
+
+:: 
+  
+  -h, --help 
+        Show help message and exit 
+ 
+  -v, --verbose 
+        Enable verbose output 
+ 
+  --nolog 
+        Disable writing of log file 
+ 
+  -u USERNAME, --username=USERNAME 
+        The username to delete from the database 
+ 
+  -f FILENAME, --file=FILENAME, --usernamefile=FILENAME 
+        A file of usernames (separated by newlines) to delete 
+ 
+  --sql 
+        Make an .sql file of the database commands but do not execute 
+ 
+  -a 
+        Remove all suspended users from the database 
+ 
+ 
+**How to Use osqaDBclean.py:**
+
+ 
+1. Create a backup of the database. Do this with the following command: 
+   
+   ::
+   
+     $ pg_dump -U database_name -f dump.sql 
+    
+  (The ``database_name`` is currently ``openmdao_osqa``.) 
+    
+2. Run ``osqaDBclean.py`` with required arguments.
+
+
+   .. Note:: You can run ``osqaDBclean.py`` with any of the options listed above, but you MUST specify either ``-f, -u,`` or
+             ``-a``. You may use ``-f, -u,`` and ``-a`` together to specify multiple users to delete.
+
+  
+3. Ensure the forums still work. If they do not, restore the database with the command:  
+	
+   ::
+   
+     $ psql -U database_name database_name < file  
+ 
+ 
+**How to Change the Database that osqaDBclean.py Connects To:** 
+ 
+You must edit the script in order to change the database that it connects to. Find the following line (near the top of
+the file) and change the appropriate fields.  
+
+::
+  
+  db = psycopg2.connect(host='127.0.0.1', 
+    	      database='openmdao_osqa', 
+    	      user='openmdao_osqa', 
+    	      password=?supersecretpassword',) 
+
+		      
+.. Note:: On WebFaction, ``database`` and ``user`` are ALWAYS the same. ``Password`` is not necessarily the same as
+	  the ssh password. It is unique to the database and should not be changed without changing the password field
+	  in the ``osqalocal_settings.py`` file.)
+
 
 Amazon EC2
 -----------
