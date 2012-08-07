@@ -3,6 +3,6 @@ Maintaining openmdao.org
 =========================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
    website
