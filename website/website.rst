@@ -23,7 +23,7 @@ Connection
 
      `Domains:`  This is where we input ``openmdao.org`` and ``www.openmdao.org``.
 
-     `Apps:` This is the place where all of the apps that run this website get routed to their part of the
+     `Apps:` This is where all of the apps that run this website get routed to their part of the
      website and/or get their port numbers.
 
 			
@@ -47,8 +47,8 @@ Connection
 Organization/Filestructure
 ===========================
 
-`Dists:`    
-~~~~~~~~~
+`Dists`    
+~~~~~~~~
 
 The ``dists`` directory is for holding local versions of packages that might need to be installed
 (e.g., scipy) that can be gotten from our ``dists`` dir instead of having to go out to other
@@ -66,10 +66,10 @@ within the ``dists`` directory, like this:
 Once you have run the script, refresh the ``openmdao.org/dists`` webpage to make sure that the
 update worked.  The newly added package should appear in the dists list.
 
-`Downloads:`
-~~~~~~~~~~~~  
+`Downloads`
+~~~~~~~~~~~  
 
-This is the place where the releases of OpenMDAO sit.  This also has a script that creates the page
+This is where the releases of OpenMDAO sit.  *Downloads* also has a script that creates the page
 at ``openmdao.org/downloads``, and each version directory has its own page that needs to be
 generated. From the instructions at ``/home/openmdao/downloads/README_TO_UPDATE``:
 
@@ -84,15 +84,57 @@ generated. From the instructions at ``/home/openmdao/downloads/README_TO_UPDATE`
 `Webapps`
 ~~~~~~~~~~
 
-**Custom app:** GitHub post-change hook. This is the trigger app that gets called automatically by
-GitHub whenever a change to the ``dev``  branch of the repository is made.  This app parses out
-the XML from that commit and kicks off the testing process.
+This section lists the webapps that ``openmdao.org`` uses. You will most likely need to refer to the information 
+on ``custom_app`` and :ref:`OSQA`.
 
-The following procedure will properly **update and restart the testserver:**
+Custom_app
+++++++++++++
+
+This is a GitHub post-change hook. It's the trigger app that gets called automatically by GitHub whenever a change to
+the ``dev``  branch of the repository is made.  This app parses out the XML from that commit and kicks off the
+testing process.
+
+When a pull request is approved on GitHub, it should trigger GitHub's ``post_receive`` hook.  The ``post_receive`` hook
+should in turn contact the OpenMDAO testing application, which then turns on EC2 machines to test the most recent commit
+against our test suite.  Sometimes, however, due to problems like the test server crashing, the ``post_receive`` fails to
+start the testing.  In these cases, you'll need another event to trigger the ``post_receive`` hook, once the
+underlying problem has been resolved (e.g., rebooting the test server.)  You don't want to have to do another commit to
+trigger testing.  The event you need is the ``send_payload`` command, which works as follows:
+
+**send_payload Command**
+
+::
+
+  -h, --help            
+        show this help message and exit
+
+  -c COMMIT_ID, --commit COMMIT_ID
+        id of commit to test
+	
+  -r REPO, --repo REPO  
+        repo url
+  
+  -b BRANCH, --branch BRANCH
+        branch name
+	
+  -s SERVER, --server SERVER
+        url:port of testapp server
+
+The most common usage example of ``send_payload`` would look like this::
+
+  send_payload -c [commit number] -s http://openmdao.org
+
+If the ``send_payload`` usage is successful, an automated test will get kicked off and results will be posted to
+http://openmdao.org/p_r.
+
+
+**Updating and Restarting the Testserver**
+
+The following procedure will properly update and restart the testserver:
 
 1.  Connect to ``web39.webfaction.com`` using the openmdao account.
 
-2.  Change directories into the custom_app's repository with the command::
+2.  Change directories into the ``custom_app`` repository with the command::
 
      cd webapps/custom_app/OpenMDAO-Framework
 
@@ -114,7 +156,7 @@ The following procedure will properly **update and restart the testserver:**
     . /devenv/bin/activate
 
 
-7.  Change directories, going back up a level to the ``~/webapps/custom_app/openmdao_testapp`` directory 
+7.  Change directories, going back up a level to the ``~/webapps/custom_app/openmdao_testapp`` directory. 
 
 8.  Type::
 
@@ -124,111 +166,116 @@ The following procedure will properly **update and restart the testserver:**
 
      start_openmdao_testapp  
 
-    The script is located at: ``~/bin/start_openmdao_testapp`` 
+    The script is located at: ``~/bin/start_openmdao_testapp``. 
 
 10. Exit web39
 
 
-**OSQA:** OSQA (Open Source Question & Answer) is an open source question-answer system written in Python with Django.
-See the section below on removing :ref:`spam users from OSQA <OSQA>`.
-
-**Procedures Doc:** The Procedure Doc is the document that you're reading now; it is kept on WebFaction under 
-``/home/openmdao/docs/procedure_docs`` and points to the URL ``openmdao.org/procedures``.  That WebFaction folder is a
-repository that watches ``git://github.com/OpenMDAO/OpenMDAO-Procedures.git``.  So when Procedures Doc repo is updated,  if
-the changes are to be reflected in the online version, then you must go to this folder,  do a ``git pull`` to update the repo,
-and then do ``make html`` to get the new doc built.
-
-**Stats:** This app populates a stats page up at ``openmdao.org/stats``.  It's a built-in WebFaction app, so you
-can't do much other than install it and give it a URL. There's nothing to configure here, although
-password protecting this page could be useful.
-
-**WordPress:** This app runs the bulk of the site. It's discussed in more detail below.
-
 .. _`OSQA`:
 
-OSQA: Removing Spam Users 
----------------------------
+OSQA
++++++
 
-A script has been written to remove users from the OSQA database. It is located in ``~/bin`` and can be run
+OSQA (Open Source Question & Answer) is an open source question-answer system written in Python with Django.
+
+**Removing Spam Users**
+
+A script has been written to remove spam users from the OSQA database. It is located in ``~/bin`` and can be run
 from anywhere with the command::
 
   osqaDBclean.py  
 
-**Arguments:**
++ *Arguments*
 
-:: 
-  
-  -h, --help 
-        Show help message and exit 
- 
-  -v, --verbose 
-        Enable verbose output 
- 
-  --nolog 
-        Disable writing of log file 
- 
-  -u USERNAME, --username=USERNAME 
-        The username to delete from the database 
- 
-  -f FILENAME, --file=FILENAME, --usernamefile=FILENAME 
-        A file of usernames (separated by newlines) to delete 
- 
-  --sql 
-        Make an .sql file of the database commands but do not execute 
- 
-  -a 
-        Remove all suspended users from the database 
- 
- 
-**How to Use osqaDBclean.py:**
+  :: 
+
+    -h, --help 
+          Show help message and exit 
+
+    -v, --verbose 
+          Enable verbose output 
+
+    --nolog 
+          Disable writing of log file 
+
+    -u USERNAME, --username=USERNAME 
+          The username to delete from the database 
+
+    -f FILENAME, --file=FILENAME, --usernamefile=FILENAME 
+          A file of usernames (separated by newlines) to delete 
+
+    --sql 
+          Make an .sql file of the database commands but do not execute 
+
+    -a 
+          Remove all suspended users from the database 
 
  
-1. Create a backup of the database. Do this with the following command: 
-   
-   ::
-   
-     $ pg_dump -U database_name -f dump.sql 
-    
-  (The ``database_name`` is currently ``openmdao_osqa``.) 
-    
-2. Run ``osqaDBclean.py`` with required arguments.
+- *How to Use osqaDBclean.py*
+
+ 1. Create a backup of the database. Do this with the following command: 
+
+    ::
+
+      $ pg_dump -U database_name -f dump.sql 
+
+   (The ``database_name`` is currently ``openmdao_osqa``.) 
+
+ 2. Run ``osqaDBclean.py`` with required arguments.
 
 
-   .. Note:: You can run ``osqaDBclean.py`` with any of the options listed above, but you MUST specify either ``-f, -u,`` or
-             ``-a``. You may use ``-f, -u,`` and ``-a`` together to specify multiple users to delete.
+    .. Note:: You can run ``osqaDBclean.py`` with any of the options listed above, but you MUST specify either ``-f, -u,`` or
+              ``-a``. You may use ``-f, -u,`` and ``-a`` together to specify multiple users to delete.
 
-  
-3. Ensure the forums still work. If they do not, restore the database with the command:  
-	
-   ::
-   
-     $ psql -U database_name database_name < file  
+
+ 3. Ensure the forums still work. If they do not, restore the database with the command:  
+
+    ::
+
+      $ psql -U database_name database_name < file  
+
  
+- *How to Change the Database that osqaDBclean.py Connects to* 
  
-**How to Change the Database that osqaDBclean.py Connects To:** 
- 
-You must edit the script in order to change the database that it connects to. Find the following line (near the top of
-the file) and change the appropriate fields.  
+  You must edit the script in order to change the database that it connects to. Find the following line (near the top of
+  the file) and change the appropriate fields.  
 
-::
-  
-  db = psycopg2.connect(host='127.0.0.1', 
-    	      database='openmdao_osqa', 
-    	      user='openmdao_osqa', 
-    	      password=?supersecretpassword',) 
+  ::
 
-		      
-.. Note:: On WebFaction, ``database`` and ``user`` are ALWAYS the same. ``Password`` is not necessarily the same as
-	  the ssh password. It is unique to the database and should not be changed without changing the password field
-	  in the ``osqalocal_settings.py`` file.)
+    db = psycopg2.connect(host='127.0.0.1', 
+    		database='openmdao_osqa', 
+    		user='openmdao_osqa', 
+    		password=?supersecretpassword',) 
 
-WordPress 
---------- 
 
-The main OpenMDAO website is done in WordPress.  The front page is a static HTML page. 
-The News page is a blog app plugin.  Downloads leads to the downloads page that's generated by Justin's
-script. All support links take users to either documentation, screencasts, or to the OSQA app mentioned
-above.
+  .. Note:: On WebFaction, ``database`` and ``user`` are ALWAYS the same. ``Password`` is not necessarily the same as
+	    the ssh password. It is unique to the database and should not be changed without changing the password field
+	    in the ``osqalocal_settings.py`` file.)
+
+
+Procedures Doc
++++++++++++++++
+
+The Procedure Doc is the document that you're reading now; it is kept on WebFaction under 
+``/home/openmdao/docs/procedure_docs`` and points to the URL http://openmdao.org/procedures.  That WebFaction folder is a
+repository that watches ``git://github.com/OpenMDAO/OpenMDAO-Procedures.git``.  So when Procedures Doc repo is updated,  if
+the changes are to be reflected in the online version, then you must go to this folder,  do a ``git pull`` to update the
+repo, and then do ``make html`` to get the new doc built.
+
+Stats
++++++++
+
+This app populates a stats page up at ``openmdao.org/stats``.  It's a built-in WebFaction app, so you
+can't do much other than install it and give it a URL. There's nothing to configure here, although
+password-protecting this page could be useful.
+
+
+WordPress
++++++++++
+
+This app runs the bulk of the OpenMDAO website. The `front` page is a static HTML page. The `News` page is a blog app plugin. 
+`Downloads` leads to the downloads page that's generated by Justin's script. All support links take users to either
+documentation, screencasts, or to the OSQA app mentioned above.
 
 
 Amazon EC2
@@ -273,7 +320,7 @@ GitHub
 
 **Service Hooks:** GitHub is great for keeping code repositories, housing issues (formerly known as tickets in our Trac
 world), and hosting wiki pages.  But for the Framework repository, we also have a post-commit hook
-set.  Whenever a commit occurs on the dev branch, a blast of XML is sent to the custom app we have
+set.  Whenever a commit occurs on the dev branch, a blast of XML is sent to the ``custom_app`` we have
 running on WebFaction.  That app in turn kicks off the build and uses the XML to log info on the
 commit that triggered the build.  
 
