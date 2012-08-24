@@ -416,13 +416,14 @@ GitHub.  The only way to control this stuff is through Keith's account.
 GitHub
 -------
 
-**Service Hooks:** GitHub is great for keeping code repositories, housing issues (formerly known as tickets in our Trac
-world), and hosting wiki pages.  But for the Framework repository, we also have a post-commit hook
-set.  Whenever a commit occurs on the dev branch, a blast of XML is sent to the ``custom_app`` we have
-running on WebFaction.  That app in turn kicks off the build and uses the XML to log info on the
-commit that triggered the build.  
+**Service Hooks:** GitHub is great for keeping code repositories, housing issues (formerly known as
+tickets in our Trac world), and hosting wiki pages.  But for the Framework repository, we also have
+a post-commit hook set.  Whenever a commit occurs on the dev branch, a blast of XML is sent to the
+``custom_app`` we have running on WebFaction.  That app in turn kicks off the build and uses the XML
+to log info on the commit that triggered the build.  
 
-The place that this is wired together on GitHub is: https://github.com/OpenMDAO/OpenMDAO-Framework/admin 
+This process is wired together on GitHub at: https://github.com/OpenMDAO/OpenMDAO-Framework/admin.
+(This link works only if you have admin privileges.)
 
 Click **Service Hooks** in the left-hand menu.
 

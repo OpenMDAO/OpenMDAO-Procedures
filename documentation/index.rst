@@ -127,9 +127,13 @@ the instructions below.
 Updating This Document (OpenMDAO Procedures)
 --------------------------------------------
 
-If you haven't done so, you need to make a personal fork of the OpenMDAO-Procedures repository and also clone the repo.
-Additionally, define a remote branch in your local repo. You only do these steps once. If you have done all
-this, follow the steps below.
+*Working on Your Branch*
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you haven't done so, you need to make a personal fork of the OpenMDAO-Procedures repository and also clone the
+repo. Additionally, define a remote branch in your local repo. You only do these steps once. (See the `Developer
+Checklist <http://openmdao.org/dev_docs/code-contribution-example.html>`_ if you need help.) If you
+have done all this, follow the steps below.
 
 1. Your first step should always be to update the master branch in your local OpenMDAO-Procedures repo::
  
@@ -175,12 +179,32 @@ this, follow the steps below.
 Upon completion of these actions, your doc changes will be pushed up to our website at
 ``openmdao.org/procedures``, where you can view them.
 
+*Miscellaneous Notes*
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- The ``conf.py`` file contains ``html_theme_options`` for customizing the look of our documents. In the
+  OpenMDAO-Framework docs, we use Arial for the heading font, and this renders all the headings as well as the text
+  on the sidebar and relation bars in Arial. However, in the OpenMDAO0-Procedures doc, if the ``"headfont"`` option
+  is set to Arial, the headings in the document and links on the sidebar appear in Arial, but text on the sidebar
+  becomes Times New Roman (at least when building during development). Therefore, in the Procedures ``conf.py``
+  file, ``"headfont`` is set to Helvetica, which renders all the text on the sidebar and relation bars and in the
+  headings as Helvetica.
+
+- We use the image file ``OpenMDAO_Logo_200w_padded.png`` in our Framework repo docs because the
+  space between the logo and text was insufficient, and we needed the padding. However, in the
+  Procedures repo, we use the unpadded version, ``OpenMDAO_Logo_200width.png``, because there is
+  already enough space around it.
+
+- In our Procedures repo, the favicon image just has to sit in the root directory to get built so it
+  appears on the browser tab.
+
+
 Editing the openmdao.org Blog 
 ------------------------------
 
 Before you can modify any text on the ``openmdao.org`` webpage, you need to log in to WordPress.
 
-1. Go to this WordPress URL: ``openmdao.org/wp-admin`` 
+1. Go to this WordPress URL: http://openmdao.org/wp-admin 
 
 2. Enter your WordPress Username and Password.
    
@@ -223,30 +247,28 @@ that you want to edit:
   cd <directory_name>
   nedit <file_name> &
   
-This brings up an empty file; the ampersand allows NEdit to run in the background.
+This brings up your file; the ampersand allows NEdit to run in the background.
 
 Using the **Fill Paragraph** Option on the **Edit** menu (or alternatively, **Ctrl+j**):  
 
--  Select a range of text and then choose **Fill Paragraph** (or **Ctrl+j**). All of the text in
-   the selection will be filled. (A paragraph is the space between blank lines.)
+- Select a range of text and then choose **Fill Paragraph** (or **Ctrl+j**). All of the text in
+  the selection will be filled. (A paragraph is the space between blank lines.)
  
--  Use **Fill Paragraph (Ctrl+j)** with a rectangular selection of text. NEdit interprets the right
-   edge of the selection (text visible to the right boundary of the window) as the requested wrap
-   margin. Text to the left of the selection is not disturbed, but text to the right of the
-   selection is pulled in to the selected region. This method enables you to fill text to an
-   arbitrary right margin, without going back and forth to the wrap-margin dialog. (In other words,
-   you can make your XWindow the desired size and use this option so your text is visible.)
+- Use **Fill Paragraph (Ctrl+j)** with a rectangular selection of text. NEdit interprets the right
+  edge of the selection (text visible to the right boundary of the window) as the requested wrap
+  margin. Text to the left of the selection is not disturbed, but text to the right of the
+  selection is pulled in to the selected region. This method enables you to fill text to an
+  arbitrary right margin, without going back and forth to the wrap-margin dialog. (In other words,
+  you can make your XWindow the desired size and use this option so your text is visible.)
     
 *Moving Text Right or Left*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- To move text to the *right:*
-  Highlight a block of text and type **Ctrl+0.** While holding down the **Ctrl** key, keep typing **0**
-  for every space you want the text to move to the right.
+To move text to the *right:* Highlight a block of text and type **Ctrl+0.** While holding down the **Ctrl** key, keep typing **0**
+for every space you want the text to move to the right.
   
-- To move text to the *left:*
-  Highlight the text and type **Ctrl+9.** While holding down the **Ctrl** key, keep typing **9**
-  for every space you want the text to move to the left.
+To move text to the *left:* Highlight the text and type **Ctrl+9.** While holding down the **Ctrl**
+key, keep typing **9** for every space you want the text to move to the left.
 
 An easy way to remember this is that the **0** is under the right parenthesis (for moving right), while
 the **9** is under the left parenthesis (for moving left). If you hold down the **Ctrl** key and type a
