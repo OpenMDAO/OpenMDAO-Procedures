@@ -1,6 +1,9 @@
 Maintaining the Documentation 
 =============================
 
+This section covers updating the user docs in the Framework repo, updating the Procedures doc, and
+updating text on our website.
+
 Updating Sphinx in the OpenMDAO-Framework Repository
 -----------------------------------------------------
 
@@ -59,14 +62,6 @@ After the branch is merged, one of the OpenMDAO maintainers will put a new distr
 (and if necessary, Docutils) in ``http://openmdao.org/dists``, which will cause the index to be
 automatically updated.
 
-Updating Sphinx in the OpenMDAO-Procedures Repo
------------------------------------------------
-
-Unlike the OpenMDAO-Framework repo, the Procedures repo has no virtual environment to activate, so you
-cannot use the ``easy_install`` command. Moreover, you do not have permission to install in the
-directory you need. Therefore, when you want to update Sphinx, ask the system admin (currently J.
-Below) to install the desired version at the system level. Remember to ask for the latest version of
-Docutils since it may be needed for Sphinx to run properly.
 
 Running Sphinx Linkcheck 
 -------------------------
@@ -123,12 +118,19 @@ the instructions below.
    Occasionally a message will say that a link has timed out. The link still works, but it's a good
    idea to check it anyway. 
    
+Updating Sphinx in the OpenMDAO-Procedures Repo
+-----------------------------------------------
+
+Unlike the OpenMDAO-Framework repo, the Procedures repo has no virtual environment to activate, so you
+cannot use the ``easy_install`` command. Moreover, you do not have permission to install in the
+directory you need. Therefore, when you want to update Sphinx, ask the system admin (currently J.
+Below) to install the desired version at the system level. 
+
+Remember to ask for the latest version of Docutils since it may be needed for Sphinx to run
+properly.
 
 Updating This Document (OpenMDAO Procedures)
 --------------------------------------------
-
-*Working on Your Branch*
-~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you haven't done so, you need to make a personal fork of the OpenMDAO-Procedures repository and also clone the
 repo. Additionally, define a remote branch in your local repo. You only do these steps once. (See the `Developer
@@ -179,25 +181,6 @@ have done all this, follow the steps below.
 Upon completion of these actions, your doc changes will be pushed up to our website at
 ``openmdao.org/procedures``, where you can view them.
 
-*Miscellaneous Notes*
-~~~~~~~~~~~~~~~~~~~~~~~
-
-- The ``conf.py`` file contains ``html_theme_options`` for customizing the look of our documents. In the
-  OpenMDAO-Framework docs, we use Arial for the heading font, and this renders all the headings as well as the text
-  on the sidebar and relation bars in Arial. However, in the OpenMDAO0-Procedures doc, if the ``"headfont"`` option
-  is set to Arial, the headings in the document and links on the sidebar appear in Arial, but text on the sidebar
-  becomes Times New Roman (at least when building during development). Therefore, in the Procedures ``conf.py``
-  file, ``"headfont`` is set to Helvetica, which renders all the text on the sidebar and relation bars and in the
-  headings as Helvetica.
-
-- We use the image file ``OpenMDAO_Logo_200w_padded.png`` in our Framework repo docs because the
-  space between the logo and text was insufficient, and we needed the padding. However, in the
-  Procedures repo, we use the unpadded version, ``OpenMDAO_Logo_200width.png``, because there is
-  already enough space around it.
-
-- In our Procedures repo, the favicon image just has to sit in the root directory to get built so it
-  appears on the browser tab.
-
 
 Editing the openmdao.org Blog 
 ------------------------------
@@ -225,6 +208,48 @@ Before you can modify any text on the ``openmdao.org`` webpage, you need to log 
    
 5. Edit the desired file. When you are finished, you can preview changes or just click on the
    **Update** button to save changes.
+
+If you want to edit the text on one of the website's pages, basically you follow the same steps
+except you select **Pages** instead of **Posts** from the Dashboard list shown in the above
+figure. 
+
+
+Miscellaneous Notes
+--------------------
+
+- The ``conf.py`` file contains ``html_theme_options`` for customizing the look of our documents. In the
+  OpenMDAO-Framework docs, we use Arial for the heading font, and this renders all the headings as well as the text
+  on the sidebar and relation bars in Arial. However, in the OpenMDAO0-Procedures doc, if the ``"headfont"`` option
+  is set to Arial, the headings in the document and links on the sidebar appear in Arial, but text on the sidebar
+  becomes Times New Roman (at least when building during development). Therefore, in the Procedures ``conf.py``
+  file, ``"headfont"`` is set to Helvetica, which renders all the text on the sidebar and relation bars and in the
+  headings as Helvetica.
+
+- We use the image file ``OpenMDAO_Logo_200w_padded.png`` in our Framework repo docs because the
+  space between the logo and text was insufficient; however, in the Procedures repo, we use the
+  unpadded version, ``OpenMDAO_Logo_200width.png``, because there is already enough space around it.
+
+- In our Procedures repo, the favicon image just has to sit in the root directory to get built so it
+  appears on the browser tab. In this repo if the file extension is not ``.ico``, Sphinx will
+  generate a warning. Thus, the file extension was changed from ``.png`` to ``.ico``.
+
+- Occasionally when building the docs, you may get a Sphinx warning for an ``undefined label``. The
+  text of the warning will be similar to the following:
+
+  ::
+
+    /OpenMDAO/dev/pziegfel/OpenMDAO-Framework/docs/srcdocs/packages/openmdao.lib.rst:7:  WARNING: undefined label:
+    enthought.traits.has_traits.py (if the link has no caption the label must precede a section header) 
+
+  To get rid of the warning, go to the ``/OpenMDAO-Framework/docs/srcdocs`` directory and edit
+  the ``index.rst`` file. Add the offending label to the file using the following format:
+
+  ::
+  
+    .. _enthought.traits.has_traits.py:
+    
+  When you build again, the warning should not appear.
+  
 
 .. _`Using-NEdit`:
 

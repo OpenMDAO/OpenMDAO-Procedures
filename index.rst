@@ -20,9 +20,3 @@ Contents:
    website/index.rst
    amazon.rst
   
-
-Index
-======
-* :ref:`genindex`
-* :ref:`search`
-
