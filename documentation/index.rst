@@ -229,9 +229,9 @@ Miscellaneous Notes
   space between the logo and text was insufficient; however, in the Procedures repo, we use the
   unpadded version, ``OpenMDAO_Logo_200width.png``, because there is already enough space around it.
 
-- In our Procedures repo, the favicon image just has to sit in the root directory to get built so it
-  appears on the browser tab. In this repo if the file extension is not ``.ico``, Sphinx will
-  generate a warning. Thus, the file extension was changed from ``.png`` to ``.ico``.
+- In our Procedures repo, if the file extension is not ``.ico``, Sphinx will generate a warning. Thus,
+  the file extension was changed from ``.png`` to ``.ico``.  Also, as long as the favicon file is in the
+  root directory of this repo, it will show up on the browser tab.  
 
 - Occasionally when building the docs, you may get a Sphinx warning for an ``undefined label``. The
   text of the warning will be similar to the following:
@@ -250,6 +250,11 @@ Miscellaneous Notes
     
   When you build again, the warning should not appear.
   
+- The sidebar: The sidebar in our OpenMDAO docs is on the left side of the page because IE had issues
+  with it being on the right side. When we created the project docs, IE would put the sidebar on the
+  right if instructed, but it omitted the text from the sidebar. When the sticky sidebar was tried, the
+  Table of Contents was omitted in IE.
+
 
 .. _`Using-NEdit`:
 
