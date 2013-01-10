@@ -75,6 +75,7 @@ branch named ``release_<version>`` will exist in the local OpenMDAO-Framework re
 At the end of the entire release building and testing process, this branch will be pushed
 up to the official OpenMDAO-Framework repository by the ``release finalize`` command.
 
+.. _`Release-Testing`:
 
 Release Testing
 ~~~~~~~~~~~~~~~
@@ -118,7 +119,7 @@ builds the release environment or the path to a directory that was built
 using the ``release build`` command.
 
 If you run the ``release test`` command without supplying ``--all`` or ``--host=``, it will
-test the release on localhost.  For example:
+test the release on localhost.  For example,
 
 ::
 
