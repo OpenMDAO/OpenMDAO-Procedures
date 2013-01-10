@@ -3,17 +3,21 @@ Remote Testing Tools
 
 The ``openmdao.devtools`` package contains a number of console scripts that
 allow openmdao to be tested and built on remote hosts. This section describes
-how to setup and use the scripts.
+how to set up and use the scripts.
 
 General Setup
 -------------
 
-Information about remote hosts is contained in a config file.  An example
-of such a file is ``config/testhosts.cfg`` in the 
-OpenMDAO-Framework repository.  This file can be copied to
-``~/.openmdao/testhosts.cfg`` and modified to contain the hosts or EC2 images
-you intend to test on.  The scripts look for this file in ``config/testhosts.cfg``
-by default, but will fall back to ``~/.openmdao/testhosts.cfg`` if the config directory's version doesn't exist. The reason for using the config directory's version as the default is so that developers will see changes to the image ID numbers (as images are updated, their numbers change) rather than have to manually keep updating their own versions.  You can specify a different config file (e.g. your ``~/.openmdao`` version) on the command line using the ``-c`` argument.
+Information about remote hosts is contained in a config file.  An example of such a file
+is ``config/testhosts.cfg`` in the  OpenMDAO-Framework repository.  This file can be
+copied to ``~/.openmdao/testhosts.cfg`` and modified to contain the hosts or EC2 images
+you intend to test on.  The scripts look for this file in ``config/testhosts.cfg`` by
+default but will fall back to ``~/.openmdao/testhosts.cfg`` if the config directory's
+version doesn't exist. The reason for using the config directory's version as the
+default is so that developers will see changes to the image ID numbers (as images are
+updated, their numbers change) rather than have to manually keep updating their own
+versions.  You can specify a different config file (e.g., your ``~/.openmdao`` version)
+on the command line using the ``-c`` argument.
 
 Aside from the [DEFAULT] section, the file has one section per 
 host or EC2 image.  The section name is used as a short alias for that host 
@@ -66,44 +70,43 @@ and instances. You can obtain this file from an OpenMDAO framework developer.
 This file should be placed in the ``~/.ssh`` directory and its permissions
 should be set to prevent access to anyone but you. Any
 host that you plan to ssh into should have the public key corresponding to
-lovejoykey.pem in its authorized_keys file.  If the host is a non-EC2 host
-and your personal public key is already in its authorized_keys file, you
+``lovejoykey.pem`` in its ``authorized_keys`` file.  If the host is a non-EC2 host
+and your personal public key is already in its ``authorized_keys`` file, you
 should be able to run the scripts there without any additional setup.
 
 
 Test Scripts
 ------------
 
-There are two types of testing to be performed.  One is branch testing, which
-is run on some branch in a git repository. The other is release testing, which 
+Two types of testing are performed.  One is branch testing, which
+is run on some designated branch in a Git repository. The other is release testing, which 
 is run on an OpenMDAO release (or the files that make up a release).
 
-There are some differences in inputs and outputs for the two scripts, but several things are
-common between them. This section talks about the common things.
+There are some differences in inputs and outputs for the two scripts, but several things
+are common between them. This section talks about the common things.
 
-The ``-h`` and the ``--help`` command-line options which will display all 
+The ``-h`` and the ``--help`` command-line options will display all 
 of their allowed arguments.
 
-Output is written to the output directory specified using the ``-o`` option. 
-The tests run concurrently and write their outputs to 
-``<outdir>/<host_config_name>/run.out`` where ``outdir`` defaults to ``host_results``,
-and ``host_config_name`` is the section name for that host in the config file. So
-for example if the script were run with a ``--host=natty32_py27`` arg, the the
-results for the *natty32_py27* host would be found in ``host_results/natty32_py27/run.out``
-file.
+Output is written to the output directory specified using the ``-o`` option.  The tests
+run concurrently and write their outputs to  ``<outdir>/<host_config_name>/run.out``
+where ``outdir`` defaults to ``host_results``, and ``host_config_name`` is the section
+name for that host in the config file. So, for example, if the script were run with a
+``--host=natty32_py27`` arg, the results for the ``natty32_py27`` host would be found in
+``host_results/natty32_py27/run.out`` file.
 
 The ``--testargs`` option can specify args that are passed to 
-openmdao_test on the remote host.  Adding a ``--testargs=-x``, for example, 
+``openmdao_test`` on the remote host.  Adding a ``--testargs=-x``, for example, 
 would cause the test to end as soon as any test on the remote host failed.
-Adding the name of a specific module to test can also be a big time saver
+Adding the name of a specific module to test can also be a big time-saver
 when debugging a specific test failure.
 
-The ``--host`` arg specifies a remote host to run on, and can be used multiple 
+The ``--host`` arg specifies a remote host to run on and can be used multiple 
 times to specify more than one host.
 
-The ``--all`` arg will cause all hosts in the testhosts.cfg file to be used for the
-test, subject to filtering based on the value of the *test_release* and *test_branch*
-options for that host in the file.
+The ``--all`` arg will cause all hosts in the ``testhosts.cfg`` file to be used for the
+test, subject to filtering based on the value of the ``test_release`` and
+``test_branch`` options for that host in the file.
 
 
 test_branch
@@ -113,6 +116,7 @@ The ``test_branch`` script is used to test a branch running ``openmdao_test``
 on a group of remote hosts. Running it with a ``-h`` option will display the following:
 
 ::
+    
     usage: test_branch [-h] [-c CONFIG] [--host HOST] [-o OUTDIR]
                        [--filter FILTERS] [--all] [-k] [-f FNAME] [-b BRANCH]
                        [-t TESTARGS]
@@ -151,7 +155,7 @@ branch of the current repository is used.
 release test
 ~~~~~~~~~~~~
 
-Release testing is done using the ``release test`` command.  See the *Release Testing*
-section for details.
+Release testing is done using the ``release test`` command.  See the section on
+:ref:`Release-Testing` for details.
 
 

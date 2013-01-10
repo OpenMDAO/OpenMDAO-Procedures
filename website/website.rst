@@ -69,7 +69,7 @@ update worked.  The newly added package should appear in the dists list.
 `Downloads`
 ~~~~~~~~~~~  
 
-This is where the releases of OpenMDAO sit.  *Downloads* also has a script that creates the page
+The releases of OpenMDAO sit in this directory.  *Downloads* also has a script that creates the page
 at ``openmdao.org/downloads``, and each version directory has its own page that needs to be
 generated. From the instructions at ``/home/openmdao/downloads/README_TO_UPDATE``:
 

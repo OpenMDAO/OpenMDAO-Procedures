@@ -187,13 +187,13 @@ then on out, you'll be able to spawn a bunch of instances from that one machine 
 
 *  Once the user exists:
 
-   1. Create a ``.ssh`` dir in openmdao home dir
+  1. Create a ``.ssh`` dir in openmdao home dir
    
-   2. Copy the ``authorized_keys`` file over from root dir
+  2. Copy the ``authorized_keys`` file over from root dir
    
-   3. chown **[??? check with Keith]** the file and the ``.ssh`` folder over to openmdao
-   
-   
+  3. Using the ``chown`` command, change ownership of both the file and the ``.ssh`` directory from the previous owner to
+     the newly created user named *openmdao.*
+
 *  ``.openmdao`` dir:
 
    Make sure that neither account contains a ``.openmdao`` directory
@@ -208,5 +208,5 @@ then on out, you'll be able to spawn a bunch of instances from that one machine 
 
    -  Be sure to give the image a descriptive name, like ``Windows2008_64bit_py27_OpenMDAO``.  
 
-   - After waiting a bit, you'll finally have an image from which you can spawn multiple instances. 
-     Good luck.
+   -  After waiting a bit, you'll finally have an image from which you can spawn multiple instances. 
+      Good luck.
