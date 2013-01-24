@@ -250,10 +250,26 @@ Miscellaneous Notes
     
   When you build again, the warning should not appear.
   
-- The sidebar: The sidebar in our OpenMDAO docs is on the left side of the page because IE had issues
-  with it being on the right side. When we created the project docs, IE would put the sidebar on the
-  right if instructed, but it omitted the text from the sidebar. When the sticky sidebar was tried, the
-  Table of Contents was omitted in IE.
+- In the unlikely event that you need to change the colors of the documentation again (updated Sept.
+  2012), you can easily update them in the ``conf.py`` file. If the colors change, you also need to update
+  the doc colors for the OpenMDAO plugins. To change the colors for the plugin docs, you must be on a
+  branch in your OpenMDAO-Framework repo. Assuming you at the root, do the following: 
+  
+  ::
+  
+    cd /openmdao.main/src/openmdao/main/plugin_templates
+    nedit conf_py_template &
+  
+  Update ``html_theme_options`` in ``conf_py_template`` with the new colors. Currently this change will not be
+  implemented until ``makedist`` is run in each plugin's repo. (A story has been submitted to change this
+  part of the process.) Note that you may also need to make other changes to the ``conf-py_template``, for example, if
+  you want to add a new Sphinx builder.
+
+- The sidebar: The sidebar in our OpenMDAO docs is on the left side of the page because IE had issues with it
+  being on the right side (and IE was widely used when the project started). When we created the project
+  docs, IE would put the sidebar on the right if instructed, but it omitted the text from the sidebar. When
+  the sticky sidebar was tried, the Table of Contents was omitted in IE. That's why the sidebar is on the
+  left.
 
 
 .. _`Using-NEdit`:
