@@ -23,7 +23,7 @@ The ``release build`` command is used to build the required distribution tar
 files for all of the OpenMDAO packages. It also builds the HTML version
 of the docs and the ``go-openmdao.py`` bootstrapping installer file.
 
-Running ``release build`` with a ``-h`` option will display the following:
+Running ``release build`` with the ``-h`` option will display the following:
 
 ::
 
@@ -82,7 +82,7 @@ Release Testing
 
 The ``release test`` command is used to test a release by running ``openmdao_test``
 on a group of remote hosts.  It can also be used to test an existing 
-production release on a specific host. Running it with a ``-h`` option 
+production release on a specific host. Running it with the ``-h`` option 
 will display the following:
 
 
@@ -126,7 +126,7 @@ test the release on localhost.  For example,
     release test rel_0.2.1 --testargs=-x
     
 will test the release locally.  It's a good idea to do this before running ``release test`` 
-with a ``--all`` because it can save the time and cost of starting up multiple EC2 instances,
+with ``--all`` because it can save the time and cost of starting up multiple EC2 instances,
 only to find that they all have the same failure.  Also, the ``--testargs`` option can save
 some time.  Setting ``--testargs=-x`` will cause the script to return immediately if any test
 fails, rather than running the complete test suite before returning.
@@ -140,8 +140,8 @@ test hosts.  This can be done as follows:
     
     
 .. note:: It's highly recommended that you add an OS X host to the hosts in your
-          ``testhosts.cfg`` file, because by default no OS X machine will be tested.
-          At the bottom of the ``config/testhosts.cfg`` file in the repository there is
+          ``testhosts.cfg`` file because by default no OS X machine will be tested.
+          At the bottom of the ``config/testhosts.cfg`` file in the repository is
           an example of an OS X host.
 
 Assuming all of the ``release test`` commands succeeded, the final step is to run

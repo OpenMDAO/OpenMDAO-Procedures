@@ -23,7 +23,7 @@ Aside from the [DEFAULT] section, the file has one section per
 host or EC2 image.  The section name is used as a short alias for that host 
 and is used with the ``--host=<section_name>`` arg in the testing and building scripts.
 
-In all of the scripts described below, adding a ``--host=<section_name>`` will cause 
+In all of the scripts described below, adding ``--host=<section_name>`` will cause 
 the script to `do whatever it does` on that host.  Supplying multiple ``--host`` args is
 allowed.  If ``--all`` is used instead of ``--host=``, then the script will do its thing
 on all of the hosts specified in the ``testhosts.cfg`` file, subject to certain internal
@@ -35,7 +35,7 @@ EC2 Specific Setup
 ------------------
 
 To run the scripts on EC2 images or non-running instances, you must create
-a ``~/.boto``  config file with the appropriate id and secret key.  You may
+a ``~/.boto``  config file with the appropriate id and secret key. You may
 also specify other information in the ``.boto file``, e.g., debug level.  An
 example of a ``.boto`` file is shown below.
 
@@ -113,7 +113,7 @@ test_branch
 ~~~~~~~~~~~
 
 The ``test_branch`` script is used to test a branch running ``openmdao_test`` 
-on a group of remote hosts. Running it with a ``-h`` option will display the following:
+on a group of remote hosts. Running it with the ``-h`` option will display the following:
 
 ::
     
@@ -135,10 +135,10 @@ on a group of remote hosts. Running it with a ``-h`` option will display the fol
       -k, --keep            Don't delete the temporary build directory. If testing
                             on EC2 stop the instance instead of terminating it.
       -f FNAME, --file FNAME
-                            Pathname of a tarfile or URL of a git repo. Defaults
+                            Pathname of a tarfile or URL of a Git repo. Defaults
                             to the current repo.
       -b BRANCH, --branch BRANCH
-                            If file is a git repo, supply branch name here
+                            If file is a Git repo, supply branch name here
       --testargs TESTARGS
                             args to be passed to openmdao_test
 
@@ -146,7 +146,7 @@ on a group of remote hosts. Running it with a ``-h`` option will display the fol
 
 The script can test the current (committed) branch of a Git repository, 
 a tarred repository, or a specific branch of a specified local or remote Git 
-repository depending upon the nature of the ``-f`` (or ``--file=``) arg.  
+repository, depending upon the nature of the ``-f`` (or ``--file=``) arg.  
 If a Git repository is specified rather than a tar file, then
 the branch must also be specified. If no ``-f`` is supplied, the current
 branch of the current repository is used.
