@@ -17,6 +17,7 @@ Contents:
    testing/index.rst
    release/index.rst
    documentation/index.rst
+   plugins/index.rst
    website/index.rst
    amazon.rst
   
