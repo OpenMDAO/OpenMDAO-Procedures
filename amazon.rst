@@ -145,7 +145,7 @@ account's home directory contains a ``.openmdao`` directory.
 **LINUX**
 
 On Linux, things are much easier. At the very start, you'll launch an instance of a machine.  Once
-that instance is launched and configured properly, then you'll save an image of that machine. From
+that instance is launched and configured properly (after you follow the below instructions), then you'll save an image of that machine. From
 then on out, you'll be able to spawn a bunch of instances from that one machine image.
 
 *  So to start, simply choose the appropriate Linux distribution (Ubuntu Meerkat or Narwhal, in our
@@ -174,29 +174,15 @@ then on out, you'll be able to spawn a bunch of instances from that one machine 
      sudo apt-get install python-scipy
      sudo apt-get install python-matplotlib
      sudo apt-get install python-dev
-     sudo apt-get install chromium-browser (or just dnld & install on Win)
-     sudo apt-get install firefox
+     sudo apt-get install python-markdown (to fulfill a requirement for EC2 images)
+     sudo apt-get install testresources (this is due to a false dependency report)
+     sudo apt-get install oracle-java7-installer 
+     sudo apt-get install google-chrome
 
-*  Unprivileged user:
-
-   ::
-
-     sudo adduser openmdao  
-     
-   (Use password as defined in the password file.)
-
-*  Once the user exists:
-
-  1. Create a ``.ssh`` dir in openmdao home dir
-   
-  2. Copy the ``authorized_keys`` file over from root dir
-   
-  3. Using the ``chown`` command, change ownership of both the file and the ``.ssh`` directory from the previous owner to
-     the newly created user named *openmdao.*
 
 *  ``.openmdao`` dir:
 
-   Make sure that neither account contains a ``.openmdao`` directory
+   Once you've gotten everything configured and you've run OpenMDAO on the machine, make sure that you delete the root account's ``.openmdao`` directory.
 
 *  Making an AMI image from an instance is the next and final step.  
 
@@ -206,7 +192,7 @@ then on out, you'll be able to spawn a bunch of instances from that one machine 
    -  In the Instances screen, check the box next to the desired image, then choose
       **Make Amazon Machine Image (AMI)**.  
 
-   -  Be sure to give the image a descriptive name, like ``Windows2008_64bit_py27_OpenMDAO``.  
+   -  Be sure to give the image a descriptive name using the format ``<Platform>_<architecture>_<python version>_OpenMDAO`` for example: ``Windows2008_64bit_py27_OpenMDAO``.  
 
    -  After waiting a bit, you'll finally have an image from which you can spawn multiple instances. 
       Good luck.
