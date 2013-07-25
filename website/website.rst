@@ -90,15 +90,15 @@ on ``custom_app`` and :ref:`OSQA`.
 Custom_app
 ++++++++++++
 
-This is a GitHub post-change hook. It's the trigger app that gets called automatically by GitHub whenever a change to
+This is called by the GitHub post-receive hook. It's the trigger app that gets called automatically by GitHub whenever a change to
 the ``dev``  branch of the repository is made.  This app parses out the XML from that commit and kicks off the
 testing process.
 
 When a pull request is approved on GitHub, it should trigger GitHub's ``post_receive`` hook.  The ``post_receive`` hook
-should in turn contact the OpenMDAO testing application, which then turns on EC2 machines to test the most recent commit
+should in turn contact the OpenMDAO testing application, which then turns on EC2 machines (specified by the test_branch qualifier) to test the most recent commit
 against our test suite.  Sometimes, however, due to problems like the test server crashing, the ``post_receive`` fails to
 start the testing.  In these cases, you'll need another event to trigger the ``post_receive`` hook, once the
-underlying problem has been resolved (e.g., rebooting the test server.)  You don't want to have to do another commit to
+underlying problem that stopped the server has been resolved (e.g., rebooting the test server.)  You don't want to have to do another commit to
 trigger testing.  The event you need is the ``send_payload`` command, which works as follows:
 
 **send_payload Command**
@@ -138,7 +138,6 @@ The following procedure will properly update and restart the testserver:
 
      cd webapps/custom_app/OpenMDAO-Framework
 
-
 3.  Update the current repository by typing:: 
 
      git pull origin dev
@@ -149,20 +148,25 @@ The following procedure will properly update and restart the testserver:
 
 5.  Build a new ``devenv`` with the command::
 
-     python2.6 go-openmdao-dev.py
+     python2.7 go-openmdao-dev.py
 
 6.  Activate that new environment with the command::
 
     . /devenv/bin/activate
 
-
 7.  Change directories into ``~/webapps/custom_app/openmdao_testapp`` directory. 
 
 8.  Type::
 
-     python2.6 setup.py develop
+     python2.7 setup.py develop
 
-9.  Make sure that the previous testserver is no longer running. First, do a process listing using the command::
+9.  Change directories one level lower into ``~/webapps/custom_app/openmdao_testapp/openmdao_testapp`` directory.
+
+10.  Make sure that the previously-running testserver is no longer running. 
+
+    from this directory, use the ``./killserver`` command.
+
+    If for some reason this isn't working, do a process listing using the command::
 
      ps -u openmdao
     
@@ -171,12 +175,14 @@ The following procedure will properly update and restart the testserver:
      kill -9 XXXX
     
     where XXXX is the PID.
+
+11. If changes were made to which platforms are going to be used, for example in testhosts.cfg, then a change needs to be made to the /home/openmdao/webapps/custom_app/openmdao_testapp/openmdao_testapp/testing.cfg file.  This must be done before server restart, as this file is read in when the server starts.  In other words, any time the testing hosts change, the server needs to be rebooted.
     
-10. To restart the test server, type::
+12. To restart the test server, type::
 
      start_openmdao_testapp  
 
-11. Exit web39
+13. Exit web39
 
 
 .. _`OSQA`:
