@@ -65,7 +65,7 @@ process a little bit less difficult.
   -  OpenSSH
   
 
-* Install Python 2.6 or 2.7 installer:
+* Install Python 2.7 installer:
 
   -  Download from here: 
   

@@ -15,7 +15,7 @@ Connection
 		 
      `server:`  ``web39.webfaction.com``
 
-     `username and password` are in a secure file that is currently on our internal server, Havoc.
+     `Username and password` are in a secure file that is currently on our internal server, Havoc.
 
 **Control Panel:**  
 			
@@ -27,16 +27,14 @@ Connection
      website and/or get their port numbers.
 
 			
-     .. image:: /images/website/apps.png
+       .. image:: /images/website/apps.png
+                                                                                    										    
+       Note that the above image shows Python2.6, which we no longer support.
 
-|    
- 
-  `Websites:` Makes sure that the site's apps have URLs that are directly reachable.  Here's the current
-  mapping of site apps:
+     `Websites:` Makes sure that the site's apps have URLs that are directly reachable.  Here's the current mapping of site apps:
 
-   .. image:: /images/website/urls.png
-     
-|   
+       .. image:: /images/website/urls.png
+      
  
      `Email addresses @openmdao.org:`  Under Emails, you can see how the ``@openmdao.org`` email addresses
      are set up.  Some are usernames, and others are aliases.  Currently all of these are forwarded to NASA
@@ -56,12 +54,12 @@ places to find them.  To add a new package, you must FTP the new file into the
 ``/home/openmdao/dists/`` directory at ``web39.webfaction.com``.   
 
 Whenever a new package is added, the webpage at ``openmdao.org/dists`` needs to be updated to
-reflect that addition. To do that, you must run Python 2.6 on the ``mkegglistindex.py`` file from
+reflect that addition. To do that, you must run Python 2.7 on the ``mkegglistindex.py`` file from
 within the ``dists`` directory, like this:
 
 ::
 
-  >> python2.6 /home/openmdao/dists/mkegglistindex.py
+  >> python2.7 /home/openmdao/dists/mkegglistindex.py
 
 Once you have run the script, refresh the ``openmdao.org/dists`` webpage to make sure that the
 update worked.  The newly added package should appear in the dists list.
@@ -77,8 +75,8 @@ generated. From the instructions at ``/home/openmdao/downloads/README_TO_UPDATE`
 
   TO UPDATE DOWNLOAD PAGES:
 
-  First, cd into the most recent folder and then run "python2.6 dlversionindex.py".
-  Then, cd back up to this level and run "python2.6 mkdownloadindex.py" in this directory.
+  First, cd into the most recent folder and then run "python2.7 dlversionindex.py".
+  Then, cd back up to this level and run "python2.7 mkdownloadindex.py" in this directory.
   Finally, check openmdao.org/downloads/ to make sure that your efforts worked.
 
 `Webapps`
