@@ -132,35 +132,9 @@ The following procedure will properly update and restart the testserver:
 
 1.  Connect to ``web39.webfaction.com`` using the openmdao account.
 
-2.  Change directories into the ``custom_app`` repository with the command::
+2.  Change directories into ``~/webapps/custom_app/openmdao_testapp/openmdao_testapp`` directory.
 
-     cd webapps/custom_app/OpenMDAO-Framework
-
-3.  Update the current repository by typing:: 
-
-     git pull origin dev
-
-4.  Remove the old ``devenv`` with the command::
-
-     rm -rf devenv
-
-5.  Build a new ``devenv`` with the command::
-
-     python2.7 go-openmdao-dev.py
-
-6.  Activate that new environment with the command::
-
-    . /devenv/bin/activate
-
-7.  Change directories into ``~/webapps/custom_app/openmdao_testapp`` directory. 
-
-8.  Type::
-
-     python2.7 setup.py develop
-
-9.  Change directories one level lower into ``~/webapps/custom_app/openmdao_testapp/openmdao_testapp`` directory.
-
-10.  Make sure that the previously-running testserver is no longer running. 
+3.  Make sure that the previously-running testserver is no longer running. 
 
     from this directory, use the ``./killserver`` command.
 
@@ -173,6 +147,32 @@ The following procedure will properly update and restart the testserver:
      kill -9 XXXX
     
     where XXXX is the PID.
+
+4.  Change directories into the ``custom_app`` repository with the command::
+
+     cd webapps/custom_app/OpenMDAO-Framework
+
+5.  Update the current repository by typing:: 
+
+     git pull origin dev
+
+6.  Remove the old ``devenv`` with the command::
+
+     rm -rf devenv
+
+7.  Build a new ``devenv`` with the command::
+
+     python2.7 go-openmdao-dev.py
+
+8.  Activate that new environment with the command::
+
+    . /devenv/bin/activate
+
+9.  Change directories into ``~/webapps/custom_app/openmdao_testapp`` directory. 
+
+10.  Type::
+
+     python2.7 setup.py develop
 
 11. If changes were made to which platforms are going to be used, for example in testhosts.cfg, then a change needs to be made to the /home/openmdao/webapps/custom_app/openmdao_testapp/openmdao_testapp/testing.cfg file.  This must be done before server restart, as this file is read in when the server starts.  In other words, any time the testing hosts change, the server needs to be rebooted.
     
