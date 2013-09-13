@@ -111,6 +111,7 @@ test, subject to filtering based on the value of the ``test_release`` and
 
 test_branch
 ~~~~~~~~~~~
+When a developer has completed changes to the code, committed them and is ready to submit a pull request, that developer, before pushing the code up to his/her fork, should run a test_branch.  This is the best indicator as to how the new code will work and play with the various platforms.  Just running openmdao_test on a single machine is not enough.  To vastly improve the chances of not breaking the dev branch, all developers should run this script before even considering a pull request.
 
 The ``test_branch`` script is used to test a branch running ``openmdao_test`` 
 on a group of remote hosts. Running it with the ``-h`` option will display the following:
