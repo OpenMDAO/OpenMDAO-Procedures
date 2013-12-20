@@ -119,7 +119,7 @@ process a little bit less difficult.
        service.  If you see sshd in the services list, but it's idle, start it. If it won't start, something's
        wrong.
 
-     * Go to the Windows Firewall and create a new rule to open TCP port 22 for ssh access.
+     * Go to the Windows Firewall and create a new rule to open TCP port 22 for SSH access.
 
      * Using Cygwin, go to the Administrator home directory (simply type ``cd``) and create a ``.ssh`` directory
        (``mkdir .ssh``).  
@@ -230,10 +230,10 @@ process a little bit less difficult.
   An AMI is a machine image from which many instances can be spawned.  Machine images can be public
   or private, but they are private by default.  
 
-  -  In the Instances screen, check the box next to the desired image, then choose
+  -  In the Instances screen, check the box next to the desired image; then choose
      **Make Amazon Machine Image (AMI)**.  
 
-  -  Be sure to give the image a descriptive name using the format ``<Platform>_<architecture>_<python version>_OpenMDAO`` for example: ``Windows2008_64bit_py27_OpenMDAO``.  
+  -  Be sure to give the image a descriptive name using the format ``<Platform>_<architecture>_<python version>_OpenMDAO``, for example: ``Windows2008_64bit_py27_OpenMDAO``.  
 
   -  After waiting a bit, you'll finally have an image from which you can spawn multiple instances. 
      Good luck.

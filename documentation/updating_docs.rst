@@ -34,9 +34,9 @@ For example::
 
   easy_install Sphinx==1.1.3
   
-While Sphinx is being installed, notice which version of Docutils is being used since the new
-version of Sphinx may require that Docutils be updated. For example, when we upgraded from
-Sphinx 1.0.6 to 1.1.3, for Sphinx to work we had to move from Docutils 0.7 to 0.8.1.
+On one occasion when we upgraded Sphinx, the new version did not work until we upgraded our
+version of Docutils. So if Sphinx does not work, check the version of Docutils to make sure
+you are running the latest one.
 
 Now, follow these steps:
 
@@ -51,7 +51,9 @@ Now, follow these steps:
 
      rm -rf devenv/
      
-4. Now rebuild the environment by running the installation script::
+4. Now run the installation script to rebuild the environment (and check dependencies.)
+
+   ::
 
      python go-openmdao-dev.py   
      
@@ -61,6 +63,20 @@ Now, follow these steps:
              
 6. Assuming there are no test failures, you can commit the changes on your branch and then issue a pull request
    from your personal OpenMDAO repo. 
+
+.. note:: In December 2013, when Sphinx was upgraded and the test suite was run on havoc, the following error
+   occurred:
+   
+   ::
+   
+     ERROR: runTest (openmdao.gui.test.js_unit_tests.test_js_unit_tests.ChromeJsUnitTestCase)
+
+     ValueError: Failed to execute JsTestDriver tests for:
+     /tmp/tmpcG519p (http://localhost:52484)
+     Error: xvfb-run: error: Xvfb failed to start
+
+   Ken had noticed this error earlier. Apparently it occurs only on havoc and is not
+   significant, so the Sphinx update was pushed up anyway. 
 
 After the branch is merged, one of the OpenMDAO maintainers will put a new distribution of Sphinx
 (and if necessary, Docutils) in ``http://openmdao.org/dists``, which will cause the index to be
@@ -176,7 +192,7 @@ have done all this, follow the steps below.
 
      1. Merge the branch on GitHub.
      
-     2. Log in to webfaction and change to the "docs/procedure_docs" directory.
+     2. Log in to WebFaction and change to the "docs/procedure_docs" directory.
      
      3. Do a "git pull origin master". 
 
