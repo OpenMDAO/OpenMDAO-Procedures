@@ -58,28 +58,34 @@ Forking requires read+write permission. If you don't have it, ask Ken Moore.
     
       plugin install
       
-    .. Note::  Just ``plugin install`` is needed--without specifying the plugin name--because you're already in the repo!	
+    .. Note::  Just ``plugin install`` is needed---without specifying the plugin name---because you're
+       already in the repo!	
 
 
 #.  If you want to make any changes, you need to create a branch and make the changes on it.
 
 
-#.  After you've changed a plugin doc and you want to view it, type:
+#.  After you've changed a plugin's documentation and you want to build and view it, type:
 
     :: 
     
-      plugin build_docs <yourpluginpath>/<yourpluginname>      
+      plugin build_docs <plugin_name>      (to build the docs)
       
-                 for example,
+                 and then
      
-      plugin build_docs /OpenMDAO/dev/pziegfel/pyopt_driver
+      openmdao docs <plugin_name>	   (to view the docs)
       
     
     Sphinx should start running.
       
-    .. Note::  I think that you can type just ``plugin build_docs <plugin_name>`` without typing the full path to
-               build the docs--at least after the first time you build. 
-
+    .. Note:: 
+       When P. Ziegfeld edited the CADRE plugin documentation, after she made some changes and
+       wanted to rebuild, the ``plugin build_docs`` command didn't work. At least once she had to
+       use the ``plugin makedist`` command, then ``plugin install CADRE 0.3.tar.gz``, and finally,
+       ``openmdao docs CADRE`` (to display the docs). After making other changes, she had to remove
+       the ``CADRE-0.3.tar.gz`` file before building. However, subsequently, the docs built using
+       either ``plugin makedist`` or ``openmdao build_docs CADRE``. (If one command didn't work, the
+       other did).  
 
 #.  When you have finished your changes, commit them, and then push up the branch using the following command with the name of
     your branch. Remember, you have to be on the branch you are pushing up.
