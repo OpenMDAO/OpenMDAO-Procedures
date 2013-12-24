@@ -150,7 +150,9 @@ test hosts.  This can be done as follows:
 Assuming all of the ``release test`` commands succeeded, the final step is to run
 ``release finalize``, which will place the new release on the ``openmdao.org`` website
 and update and tag the master branch of the official OpenMDAO-Framework repository on GitHub.
-Since this updates the master branch, it will not trigger automated branch tests.  Only a push from master to dev will do that.
+Since this updates the master branch, it will not trigger automated branch tests.  Only a push from master to dev will do that, which we will do after the finalize.
+
+Before running release finalize, it helps to make sure you have git set up to run without needing a github login, as this can interrupt the finalize process midway.  There are several pages on the web that show how to do this.
 
 Running ``release finalize`` with ``-h`` will display the following help message:
 
