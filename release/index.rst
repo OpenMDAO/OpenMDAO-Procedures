@@ -41,7 +41,7 @@ Running ``release build`` with the ``-h`` option will display the following:
       -v VERSION, --version VERSION
                             version string applied to all openmdao distributions
       -m COMMENT            optional comment for version tag
-      --basebranch BASE     base branch for release. defaults to dev
+      --basebranch BASE     base branch for release. defaults to master
       -t, --test            used for testing. A release branch will not be created
       -n, --nodocbuild      used for testing. The docs will not be rebuilt if they
                             already exist
@@ -69,6 +69,9 @@ results in a command of the form:
 
     release build -b -v <version>
     
+
+First, you should update the OpenMDAO/OpenMDAO-Framework master branch from the current dev branch.  Then update your local repo's master branch accordingly.  While the release is being built and tested, you should request that no new merges be made to the dev branch.  Once you have built and locally tested your updated master, build the release.
+
 After executing the command, a ``rel_<version>`` directory containing all OpenMDAO
 distribution packages and docs will exist in the current directory.  Also, a new
 branch named ``release_<version>`` will exist in the local OpenMDAO-Framework repository.
@@ -146,8 +149,8 @@ test hosts.  This can be done as follows:
 
 Assuming all of the ``release test`` commands succeeded, the final step is to run
 ``release finalize``, which will place the new release on the ``openmdao.org`` website
-and update and tag the dev branch of the official OpenMDAO-Framework repository on GitHub.
-Since this updates the dev branch, it will trigger automated branch tests.  
+and update and tag the master branch of the official OpenMDAO-Framework repository on GitHub.
+Since this updates the master branch, it will not trigger automated branch tests.  Only a push from master to dev will do that.
 
 Running ``release finalize`` with ``-h`` will display the following help message:
 
@@ -164,4 +167,5 @@ Running ``release finalize`` with ``-h`` will display the following help message
       -d, --dryrun          don't actually push any changes up to GitHub or
                             ``openmdao.org``
 
+Once the release has been finalized, you will need to then push master back to the dev branch, which will kick off a round of automated testing, and get the version number updated on the dev branch.
 
