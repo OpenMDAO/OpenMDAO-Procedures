@@ -136,7 +136,7 @@ The following procedure will properly update and restart the testserver:
 
 3.  Make sure that the previously-running testserver is no longer running. 
 
-    from this directory, use the ``./killserver`` command.
+    From this directory, use the ``./killserver`` command.
 
     If for some reason this isn't working, do a process listing using the command::
 
@@ -150,7 +150,7 @@ The following procedure will properly update and restart the testserver:
 
 4.  Change directories into the ``custom_app`` repository with the command::
 
-     cd webapps/custom_app/OpenMDAO-Framework
+     cd ~/webapps/custom_app/OpenMDAO-Framework
 
 5.  Update the current repository by typing:: 
 
