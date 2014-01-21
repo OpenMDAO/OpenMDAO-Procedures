@@ -152,7 +152,7 @@ Assuming all of the ``release test`` commands succeeded, the final step is to ru
 and update and tag the master branch of the official OpenMDAO-Framework repository on GitHub.
 Since this updates the master branch, it will not trigger automated branch tests.  Only a push from master to dev will do that, which we will do after the finalize.
 
-Before running release finalize, it helps to make sure you have git set up to run without needing a github login, as this can interrupt the finalize process midway.  There are several pages on the web that show how to do this.
+Before running release finalize, it helps to make sure you have git set up to run without needing a GitHub login, as this can interrupt the finalize process midway.  There are several pages on the web that show how to do this.
 
 Running ``release finalize`` with ``-h`` will display the following help message:
 
@@ -175,25 +175,43 @@ Once the release has been finalized, you will need to then push master back to t
 Plugin Tagging
 --------------
 
-Once a release has been done, the OpenMDAO-Plugins need to be inspected and tagged.
+Once a release has been completed, the OpenMDAO-Plugins need to be inspected and tagged. Follow these steps.
 
-1. have an activated env of the latest OpenMDAO ready that contains the newest release tags.
-2. See if a plugin has changed since last OpenMDAO release, a date that can be gotten from the website's downloads page.  Github's OpenMDAO-Plugins page lists the date of the most recent changes.  Ususally only a few will have changed since the previous OpenMDAO release.
-3.  If a plugin has changed, pull those changes to your local repo.  If you don't have a local repo, it's time to make one.
-4. Increment the version number in the setup.cfg file.  Save the file.
-5. From within that plugin's directory, (activated) run "plugin makedist"
-6. Commit changes with "git commit -a -m "Comment"
-7. Update the actual git tags as such:
-   "git tag -a 0.x.x -m "Tagging for OpenMDAO release 0.9.x"
-   where 0.x.x is the newly-incremented version number of the plugin.
-8. Push the tags directly back up to their repository.  DANGER, don't screw this up!
-   "git push origin master --tags"
+1. Have an activated env of the latest OpenMDAO ready that contains the newest release tags.
 
-NOTE: An advanced user might decide that a documentation change doesn't neccesitate an increment in the version, so in that case, one might skip step 4 and do this instead:
-Move the current tag to the latest commit by
-1. Deleting the current version's tag
-  git tag -d 0.x.x
-2. Pushing that deletion up to the server
-    git push origin :refs/tags/0.x.x
-3. Re-doing the same tag on the new code:
-	resume at step 5 above, including re-tagging with the same number 0.x.x in step 7.
+2. See if a plugin has changed since the last OpenMDAO release. You can get a date from the website's downloads page. 
+   GitHub's OpenMDAO-Plugins page lists the date of the most recent changes. Usually only a few will have changed since the previous OpenMDAO release.
+
+3. If a plugin has changed, pull those changes to your local repo.  If you don't have a local repo, it's time to make one.
+
+4. Increment the version number in the ``setup.cfg`` file. Save the file.
+
+5. From within that plugin's directory (activated), run ``plugin makedist``
+
+6. Commit changes with ``git commit -a -m "Comment"``
+
+7. Update the actual Git tags as such:
+
+   ``git tag -a 0.x.x -m "Tagging for OpenMDAO release 0.9.x``
+   
+   where ``0.x.x`` is the newly-incremented version number of the plugin.
+
+8. Push the tags directly back up to their repository. **DANGER, don't screw this up!**
+   
+   ``git push origin master --tags"``
+
+.. note::
+
+   An advanced user might decide that a documentation change doesn't necessitate an increment in the version. In such a case, the user might
+   skip Step 4 and instead move the current tag to the latest commit by following the steps below.
+   
+      
+1. Deleting the current version's tag:
+     
+   ``git tag -d 0.x.x``
+	
+2. Pushing that deletion up to the server:
+    
+   ``git push origin :refs/tags/0.x.x``
+
+3. Re-doing the same tag on the new code. Resume at Step 5 above and re-tag with the same number ``0.x.x`` as in Step 7.
