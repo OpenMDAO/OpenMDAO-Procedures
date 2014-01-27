@@ -192,13 +192,13 @@ Once a release has been completed, the OpenMDAO-Plugins need to be inspected and
 
 7. Update the actual Git tags as such:
 
-   ``git tag -a 0.x.x -m "Tagging for OpenMDAO release 0.9.x``
+   ``git tag -a 0.x.x -m "Tagging for OpenMDAO release 0.9.x"``
    
    where ``0.x.x`` is the newly-incremented version number of the plugin.
 
 8. Push the tags directly back up to their repository. **DANGER, don't screw this up!**
    
-   ``git push origin master --tags"``
+   ``git push origin master --tags``
 
 .. note::
 
