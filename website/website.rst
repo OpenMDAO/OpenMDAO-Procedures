@@ -170,9 +170,9 @@ The following procedure will properly update and restart the testserver:
 
 9.  Change directories into ``~/webapps/custom_app/openmdao_testapp`` directory. 
 
-10.  Type::
+10.  Type, from the activated prompt::
 
-     python2.7 setup.py develop
+     python setup.py develop
 
 11. If changes were made to which platforms are going to be used, for example in testhosts.cfg, then a change needs to be made to the /home/openmdao/webapps/custom_app/openmdao_testapp/openmdao_testapp/testing.cfg file.  This must be done before server restart, as this file is read in when the server starts.  In other words, any time the testing hosts change, the server needs to be rebooted.
     
