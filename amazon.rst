@@ -216,9 +216,13 @@ process a little bit less difficult.
       sudo apt-get install python-matplotlib
       sudo apt-get install python-dev
       sudo apt-get install python-markdown (to fulfill a requirement for EC2 images)
-      sudo apt-get install testresources (this is due to a false dependency report)
-      sudo apt-get install oracle-java7-installer 
-      sudo apt-get install google-chrome
+      sudo apt-get install openjdk-7-jre
+      sudo apt-get install xvfb
+      sudo apt-get watchdog
+      sudo apt-get install firefox
+
+      Use firefox to go and download the google chrome installation package.  Then install that with:
+      dkpg -i [downloaded_chrome_package_name]
 
 
   * ``.openmdao`` dir:
