@@ -92,7 +92,7 @@ Output is written to the output directory specified using the ``-o`` option.  Th
 run concurrently and write their outputs to  ``<outdir>/<host_config_name>/run.out``
 where ``outdir`` defaults to ``host_results``, and ``host_config_name`` is the section
 name for that host in the config file. So, for example, if the script were run with a
-``--host=natty32_py27`` arg, the results for the ``natty32_py27`` host would be found in
+``--host natty32_py27`` arg, the results for the ``natty32_py27`` host would be found in
 ``host_results/natty32_py27/run.out`` file.
 
 The ``--testargs`` option can specify args that are passed to 
