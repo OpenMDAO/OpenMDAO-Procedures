@@ -2,8 +2,8 @@ Release Building, Testing, and Publishing
 =========================================
 
 After branch testing is complete, it may be time to create a new OpenMDAO
-release. The ``release`` tool and its subcommands described below make the 
-process a little easier.  The procedure to create and publish a release 
+release. The ``release`` tool and its subcommands described below make the
+process a little easier.  The procedure to create and publish a release
 is as follows:
 
 ::
@@ -14,6 +14,36 @@ is as follows:
     release finalize -v <version>
 
 The following sections will give more detailed explanations of the steps shown above.
+
+Preparation
+----------------
+
+In order to build a release, go to your OpenMDAO-Framework repo.  Make sure that you have no outstanding code changes on branches "dev" or "master," as you'll be working on them and want them to be clean.  The idea here is that the most recent release is sitting on branch "master," and the most recent development code is of course sitting on branch "dev." We obviously want the most recent code to get in to the release and end up on master.  If you don't have a local master branch, you'll need to create one, and to make sure your remotes are set up properly, with "origin" pointing to git://github.com/OpenMDAO/OpenMDAO-Framework.git and "myfork" (for example) pointing to git://github.com/<username>/OpenMDAO-Framework.git. When you're done with setup, you should be able to do this:
+
+::
+
+  kmarstel$ git remote -v
+   myfork	https://github.com/kmarsteller/OpenMDAO-Framework.git (fetch)
+   myfork	https://github.com/kmarsteller/OpenMDAO-Framework.git (push)
+   origin	https://github.com/OpenMDAO/OpenMDAO-Framework.git (fetch)
+   origin	https://github.com/OpenMDAO/OpenMDAO-Framework.git (push)
+
+Once you have your dev and master branches set up properly, let's go to your dev branch, and make sure you have the latest code there:
+  ``git checkout dev``
+  ``git pull origin dev``
+
+Once dev is updated, switch to your dev branch.  Then make sure you have the latest master.
+  ``git checkout master``
+  ``git pull origin master``
+
+It's at this point that we will merge the changes from dev into master:
+   ``git merge dev``
+
+Occasionally, manual help is needed to completely resolve the merge.  Be cautious.
+
+Now completely remove the devenv directory, and rebuild from scratch. Then run an "openmdao test" suite locally.  While that runs, perform the manual tests that are enumerated in OpenMDAO-Framework/openmdao.gui/src/openmdao/gui/test/functional/manual. Once you have successfully built and locally tested your updated master, build the release.
+
+While the release is being built and tested, you should request that no new merges be made to the dev branch.
 
 
 Release Creation
@@ -62,15 +92,13 @@ of the ``release build`` command, then the ``-b`` option may be omitted. The ``-
 ``-n`` options should  not be used except during testing or debugging of the ``release
 build`` command.
 
-When creating an *official* release, using all default values is recommended, which 
+When creating an *official* release, using all default values is recommended, which
 results in a command of the form:
 
 ::
 
     release build -b -v <version>
-    
 
-First, you should update the OpenMDAO/OpenMDAO-Framework master branch from the current dev branch.  Then update your local repo's master branch accordingly.  While the release is being built and tested, you should request that no new merges be made to the dev branch.  Once you have built and locally tested your updated master, build the release.
 
 After executing the command, a ``rel_<version>`` directory containing all OpenMDAO
 distribution packages and docs will exist in the current directory.  Also, a new
@@ -84,8 +112,8 @@ Release Testing
 ~~~~~~~~~~~~~~~
 
 The ``release test`` command is used to test a release by running ``openmdao_test``
-on a group of remote hosts.  It can also be used to test an existing 
-production release on a specific host. Running it with the ``-h`` option 
+on a group of remote hosts.  It can also be used to test an existing
+production release on a specific host. Running it with the ``-h`` option
 will display the following:
 
 
@@ -117,8 +145,8 @@ will display the following:
       --testargs TESTARGS   args to be passed to openmdao_test
 
 
-The positional argument *fname* is used to specify either the ``go-openmdao.py`` file that 
-builds the release environment or the path to a directory that was built 
+The positional argument *fname* is used to specify either the ``go-openmdao.py`` file that
+builds the release environment or the path to a directory that was built
 using the ``release build`` command.
 
 If you run the ``release test`` command without supplying ``--all`` or ``--host=``, it will
@@ -126,22 +154,22 @@ test the release on localhost.  For example,
 
 ::
 
-    release test rel_0.2.1 --testargs=-x
-    
-will test the release locally.  It's a good idea to do this before running ``release test`` 
+    release test rel_0.10.1 --testargs=-x
+
+will test the release locally.  It's a good idea to do this before running ``release test``
 with ``--all`` because it can save the time and cost of starting up multiple EC2 instances,
 only to find that they all have the same failure.  Also, the ``--testargs`` option can save
 some time.  Setting ``--testargs=-x`` will cause the script to return immediately if any test
 fails, rather than running the complete test suite before returning.
 
-If ``release test`` succeeds locally, then the next step is to run it on the full set of 
+If ``release test`` succeeds locally, then the next step is to run it on the full set of
 test hosts.  This can be done as follows:
 
 ::
 
-    release test rel_0.2.1 --all
-    
-    
+    release test rel_0.10.1 --all
+
+
 .. note:: It's highly recommended that you add an OS X host to the hosts in your
           ``testhosts.cfg`` file because by default no OS X machine will be tested.
           At the bottom of the ``config/testhosts.cfg`` file in the repository is
@@ -169,7 +197,24 @@ Running ``release finalize`` with ``-h`` will display the following help message
       -d, --dryrun          don't actually push any changes up to GitHub or
                             ``openmdao.org``
 
-Once the release has been finalized, you will need to then push master back to the dev branch, which will kick off a round of automated testing, and get the version number updated on the dev branch.
+IMPORTANT!  Once the release has been finalized, you will need to then push master back to the dev branch, which will kick off a round of automated testing, and get the version number updated on the dev branch.  If you forget this, dev's version number will be off!
+
+
+Release Notes
+--------------
+
+Once the release is finalized, there will be a directory created up on webfaction at: ``/home/openmdao/downloads/0.10.x``
+You will need to go in there and create a file called "release_notes.html."  Check the format of other release notes for help, and use Pivotal Tracker to figure out what belongs in the release notes.
+
+
+Wordpress Blog
+--------------
+A release is usually accompanied by a news piece on the openmdao.org blog that links to the downloadable go file and a link to the release notes.
+
+
+Twitter Account
+--------------
+A new release usually warrants a Tweet from the OpenMDAO account, usually with a link to the blog story.
 
 
 Plugin Tagging
@@ -179,7 +224,7 @@ Once a release has been completed, the OpenMDAO-Plugins need to be inspected and
 
 1. Have an activated env of the latest OpenMDAO ready that contains the newest release tags.
 
-2. See if a plugin has changed since the last OpenMDAO release. You can get a date from the website's downloads page. 
+2. See if a plugin has changed since the last OpenMDAO release. You can get a date from the website's downloads page.
    GitHub's OpenMDAO-Plugins page lists the date of the most recent changes. Usually only a few will have changed since the previous OpenMDAO release.
 
 3. If a plugin has changed, pull those changes to your local repo.  If you don't have a local repo, it's time to make one.
@@ -192,26 +237,26 @@ Once a release has been completed, the OpenMDAO-Plugins need to be inspected and
 
 7. Update the actual Git tags as such:
 
-   ``git tag -a 0.x.x -m "Tagging for OpenMDAO release 0.9.x"``
-   
-   where ``0.x.x`` is the newly-incremented version number of the plugin.
+   ``git tag -a 0.x.x -m "Tagging for OpenMDAO release 0.10.x"``
+
+   where ``0.x.x`` is the newly-incremented version number of the plugin, NOT the OpenMDAO version.
 
 8. Push the tags directly back up to their repository. **DANGER, don't screw this up!**
-   
+
    ``git push origin master --tags``
 
 .. note::
 
    An advanced user might decide that a documentation change doesn't necessitate an increment in the version. In such a case, the user might
    skip Step 4 and instead move the current tag to the latest commit by following the steps below.
-   
-      
+
+
 1. Deleting the current version's tag:
-     
+
    ``git tag -d 0.x.x``
-	
+
 2. Pushing that deletion up to the server:
-    
+
    ``git push origin :refs/tags/0.x.x``
 
 3. Re-doing the same tag on the new code. Resume at Step 5 above and re-tag with the same number ``0.x.x`` as in Step 7.
