@@ -3,8 +3,8 @@ Release Building, Testing, and Publishing
 
 After branch testing is complete, it may be time to create a new OpenMDAO
 release. The ``release`` tool and its subcommands described below make the
-process a little easier.  The procedure to create and publish a release
-is as follows:
+process a little easier.  The basic commands to create and publish a release
+are as follows:
 
 ::
 
@@ -29,21 +29,30 @@ In order to build a release, go to your OpenMDAO-Framework repo.  Make sure that
    origin	https://github.com/OpenMDAO/OpenMDAO-Framework.git (push)
 
 Once you have your dev and master branches set up properly, let's go to your dev branch, and make sure you have the latest code there:
-  ``git checkout dev``
-  ``git pull origin dev``
+
+::
+
+   git checkout dev
+   git pull origin dev
 
 Once dev is updated, switch to your dev branch.  Then make sure you have the latest master.
-  ``git checkout master``
-  ``git pull origin master``
+
+::
+
+   git checkout master
+   git pull origin master
 
 It's at this point that we will merge the changes from dev into master:
-   ``git merge dev``
+
+::
+
+   git merge dev
 
 Occasionally, manual help is needed to completely resolve the merge.  Be cautious.
 
-Now completely remove the devenv directory, and rebuild from scratch. Then run an "openmdao test" suite locally.  While that runs, perform the manual tests that are enumerated in OpenMDAO-Framework/openmdao.gui/src/openmdao/gui/test/functional/manual. Once you have successfully built and locally tested your updated master, build the release.
+Now, completely remove the devenv directory, and rebuild from scratch. Then run an "openmdao test" suite locally.  While that runs, perform the manual tests that are enumerated in OpenMDAO-Framework/openmdao.gui/src/openmdao/gui/test/functional/manual. Once you have successfully locally built and tested your updated master, create the release.
 
-While the release is being built and tested, you should request that no new merges be made to the dev branch.
+.. NOTE:: While the release is being built and tested, you should request that no new merges be made to the dev branch.
 
 
 Release Creation
