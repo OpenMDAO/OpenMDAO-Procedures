@@ -87,7 +87,7 @@ on ``custom_app`` and :ref:`OSQA`.
 
 
 OpenMDAO Test Server (custom_app)
-++++++++++++
++++++++++++++++++++++++++++++++++
 
 This server is called by the GitHub post-receive hook. It's the trigger app that gets called automatically by GitHub whenever a change to
 the ``dev``  branch of the repository is made.  This app parses out the XML from that commit and kicks off the
