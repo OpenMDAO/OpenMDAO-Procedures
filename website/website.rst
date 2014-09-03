@@ -412,8 +412,7 @@ The administrator should periodically check to make sure that no code injection 
 
 3. If it has happened, we must do a ``git reset hard --HEAD`` to get things back to where they belong. This discards any changes that have been made since the last commit.
 
-4. After the reset, view the file that you just verified in step 2 had a code injection in it.  Make sure that it now doesn't.
-Make sure that `git status` no longer shows hundreds of changed files.  The website should still be up, or if it was down, it should come back up now.
+4. After the reset, view the file that you just verified in step 2 had a code injection in it.  Make sure that it now doesn't. Make sure that `git status` no longer shows hundreds of changed files.  The website should still be up, or if it was down, it should come back up now.
 
 
 Keeping WordPress Up to Date
@@ -422,9 +421,9 @@ Since we are now tracking all of the .php files in the repository, every time th
 and pushed up to the main repository as the new normal.  That way, if we need to reset, we reset without losing our updates.  Here's the procedure:
 
 
-1. First, login via ssh to web39 and change directories to the wp_test dir, where the repo lives.
+1. First, login via ssh to web39 and change directories to ~/webapps/wp_test, where the repo lives.
 
-  a. If you don't have a fork of the OpenMDAO/wordpress repo, go make one.
+  a. If you don't have a fork of the OpenMDAO/wordpress repo, go make one at the github site.
 
 
 	b. If you don't have a remote hooked up to your fork, do so:  ``git remote add myfork https://github.com/username/wordpress``
@@ -432,20 +431,15 @@ and pushed up to the main repository as the new normal.  That way, if we need to
 
 2. Make sure that no code injection has happened. See the section above titled "Checking For/Recovering From a Code Injection Attack Against WordPress"
 
-
 3. Make sure the site is still up, then login via browser to the site at ``http://openmdao.org/wp-admin/``, but also keep the ssh to webfaction open.
-
 
 *For updates of WordPress or its plugins, repeat steps 4 - 7 for each update desired:*
 
 4. Use the graphical menu in the wp-admin page (Dashboard -> Update) to update to the latest WordPress version, or to update a plugin.  After the update, make sure the site is still up.
 
-
 5. Each update should itemize for you which files were modified.  Now, in your command prompt login, do a ``git status``, and you should see the same files listed by the update as having just been changed.  If you see additional files changed, something is wrong.  Assuming all is well, this is when you should do a ``git commit -am "Updating to WordPress X.X.X"`` or ``git commit -am "Updating Akismet plugin to version X.X"``
 
-
 6. Push the new commit up to your fork.  ``git push myfork master``
-
 
 7. Using the github website, initiate a pull request back to the origin repository.  Once the pull request is approved, repeat steps 4-7 to install additional updates.
 
