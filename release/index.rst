@@ -222,7 +222,7 @@ A release is usually accompanied by a news piece on the openmdao.org blog that l
 
 
 Twitter Account
---------------
+---------------
 A new release usually warrants a Tweet from the OpenMDAO account, usually with a link to the blog story.
 
 

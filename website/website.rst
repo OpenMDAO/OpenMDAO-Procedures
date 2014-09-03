@@ -174,7 +174,7 @@ The following procedure will properly update and restart the testserver:
 
 9.  Change directories into ``~/webapps/custom_app/openmdao_testapp`` directory.
 
-10.  Type, from the activated prompt::
+10. Type, from the activated prompt::
 
      python setup.py develop
 
