@@ -91,11 +91,14 @@ OpenMDAO Test Server (custom_app)
 
 This server is called by the GitHub post-receive hook. It's the trigger app that gets called automatically by GitHub whenever a change to
 the ``dev``  branch of the repository is made.  This app parses out the XML from that commit and kicks off the
-testing process.
+testing process.  The OpenMDAO test server is kept in a separate repository on Github:  https://github.com/OpenMDAO/openmdao_testapp.
+
 
 When a pull request is approved on GitHub, it should trigger GitHub's ``post_receive`` hook.  The ``post_receive`` hook
 should in turn contact the OpenMDAO testing application, which then turns on EC2 machines (specified by the test_branch qualifier) to test the most recent commit
-against our test suite.  Sometimes, however, due to problems like the test server crashing, the ``post_receive`` fails to
+against our test suite.  The results are then tabulated, posted to openmdao.org/p_r, and sent off through another hook to the OpenMDAO Slack channel #github-pivotal.
+
+Sometimes, however, due to problems like the test server crashing, the ``post_receive`` fails to
 start the testing.  In these cases, you'll need another event to trigger the ``post_receive`` hook, once the
 underlying problem that stopped the server has been resolved (e.g., rebooting the test server.)  You don't want to have to do another commit to
 trigger testing.  The event you need is the ``send_payload`` command, which works as follows:
@@ -420,19 +423,10 @@ notifications, add yourself to that email address (see above section on email al
 at: http://twitter.com/#!/openmdao.  The username and password for this account will be in the
 password document on Havoc.
 
-
-Launchpad
-----------
-
-``launchpad.net/openmdao`` is no longer used but has a re-direct to the current project site and to
-GitHub.  The only way to control this stuff is through Keith's account.
-
-
 GitHub
 -------
 
-**Service Hooks:** GitHub is great for keeping code repositories, housing issues (formerly known as
-tickets in our Trac world), and hosting wiki pages.  But for the Framework repository, we also have
+**Service Hooks:** GitHub is great for keeping code repositories.  But for the Framework repository, we also have
 a post-commit hook set.  Whenever a commit occurs on the dev branch, a blast of XML is sent to the
 ``custom_app`` we have running on WebFaction.  That app in turn kicks off the build and uses the XML
 to log info on the commit that triggered the build.
