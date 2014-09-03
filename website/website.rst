@@ -399,7 +399,7 @@ Checking For/Recovering From a Code Injection Attack Against WordPress
 ======================================================================
 
 The website has recently been the victim of a code injection attack--with malicious code inserted into the actual php header tags of all the .php files
-that make up the site's file structure.  Recovery was tedious, as all effected files had to be manually edited.  To combat this in the future, several measures have been taken, including the disabling of comments and
+that make up the site's file structure.  Recovery was tedious, as all affected files had to be manually edited.  To combat this in the future, several measures have been taken, including the disabling of comments and
 tracebacks for any of the WordPress pages, and registering with Akismet spam cleanup service.  Most importantly, the entire directory has also been backed up
 as a Git repo in the form of a private repository at  ``https://github.com/OpenMDAO/wordpress``.  This way, if another attack occurs, the hundreds of .php
 files that make up our Wordpress site can be restored with one ``git reset --hard HEAD`` (a dangerous command, as it discards all uncommitted changes.)
