@@ -1,3 +1,5 @@
+.. _`Using-NEdit`:
+
 Using NEdit 
 ===========
 

@@ -53,5 +53,4 @@ Miscellaneous Notes
   the Table of Contents was omitted. Thus, the sidebar is on the left.
 
 
-.. _`Using-NEdit`:
 
