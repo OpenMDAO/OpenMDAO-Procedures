@@ -32,56 +32,53 @@ If you want to grab a specific version of Sphinx, type:
 
 For example::
 
-  easy_install Sphinx==1.1.3
+  easy_install Sphinx==1.3.1
   
-On one occasion when we upgraded Sphinx, the new version did not work until we upgraded our
-version of Docutils. So if Sphinx does not work, check the version of Docutils to make sure
-you are running the latest one.
+Sphinx works with Docutils and Pygments, so sometimes when you upgrade Sphinx you will also need
+to upgrade one or both of these other applications. The Sphinx release notes should include updated dependency
+requirements. If you didn't read the release notes and Sphinx doesn't run, check to see which versions of
+Docutils and Pygments you are using to make sure they are compatible with your version of Sphinx.
 
-Now, follow these steps:
+Next, follow these steps:
 
-1. Update the script ``go-openmdao-dev.py``, which is located in the root directory of your
-   repo. (Change the version of Sphinx, and if necessary, Docutils.)
+1. Update the script ``go-openmdao-dev.py``, which is located in the root directory of your repo. Update the
+   version number of Sphinx, and if necessary, the version numbers of Docutils and Pygments.
 
-2. Deactivate your virtual environment::
+2. Check other ``setup.py`` files and Anaconda recipes to if they they are dependent on Sphinx. Update the version
+   number of Sphinx if they are. (The ``setup.py`` files in ``openmdao.devtools`` and ``openmdao.main`` are files
+   that will need to be updated.)
+
+3. Deactivate your virtual environment::
   
      deactivate
      
-3. Delete ``devenv/``::
+4. Delete ``devenv/``::
 
      rm -rf devenv/
      
-4. Now run the installation script to rebuild the environment (and check dependencies.)
+5. Now run the installation script to rebuild the environment (and check dependencies.)
 
    ::
 
-     python go-openmdao-dev.py   
+     python go-openmdao-dev.py 
+      
      
-5. Run the test suite::
+6. Run the test suite::
 
      openmdao test
              
-6. Assuming there are no test failures, you can commit the changes on your branch and then issue a pull request
+7. Assuming there are no test failures, you can commit the changes on your branch and then issue a pull request
    from your personal OpenMDAO repo. 
 
-.. note:: In December 2013, when Sphinx was upgraded and the test suite was run on havoc, the following error
-   occurred:
-   
-   ::
-   
-     ERROR: runTest (openmdao.gui.test.js_unit_tests.test_js_unit_tests.ChromeJsUnitTestCase)
-
-     ValueError: Failed to execute JsTestDriver tests for:
-     /tmp/tmpcG519p (http://localhost:52484)
-     Error: xvfb-run: error: Xvfb failed to start
-
-   Ken had noticed this error earlier. Apparently it occurs only on havoc and is not
-   significant, so the Sphinx update was pushed up anyway. 
 
 After the branch is merged, one of the OpenMDAO maintainers will put a new distribution of Sphinx
-(and if necessary, Docutils) in ``http://openmdao.org/dists``, which will cause the index to be
+(and Docutils and/or Pygments, if needed) in ``http://openmdao.org/dists``, which will cause the index to be
 automatically updated.
 
+.. Note::
+
+   When Sphinx 1.3.0 was released, the "default" html theme (which  OpenMDAO uses) was changed to
+   the "classic" theme, so references to this had to be updated before Sphinx would run.
 
 Running Sphinx Linkcheck 
 -------------------------
