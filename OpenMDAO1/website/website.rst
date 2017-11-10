@@ -425,9 +425,7 @@ and pushed up to the main repository as the new normal.  That way, if we need to
 
   a. If you don't have a fork of the OpenMDAO/wordpress repo, go make one at the github site.
 
-
-	b. If you don't have a remote hooked up to your fork, do so:  ``git remote add myfork https://github.com/username/wordpress``
-
+  b. If you don't have a remote hooked up to your fork, do so:  ``git remote add myfork https://github.com/username/wordpress``
 
 2. Make sure that no code injection has happened. See the section above titled "Checking For/Recovering From a Code Injection Attack Against WordPress"
 
